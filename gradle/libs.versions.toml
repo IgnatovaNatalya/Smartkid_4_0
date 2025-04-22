@@ -12,9 +12,9 @@ constraintlayout = "2.2.1"
 retrofit = "2.11.0"
 koin = "3.3.0"
 room = "2.7.0"
-ksp = "1.8.10-1.0.9"
+ksp = "2.0.21-1.0.25" #1.9.0-1.0.13
 rxandroid = "3.0.2"
-rxjava="3.1.9"
+rxjava = "3.1.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,12 +29,12 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit_converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 koin = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-compiler = { group  = "androidx.room", name="room-compiler", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-room-rxJava3 = { group = "androidx.room", name="room-rxjava3", version.ref = "room" }
+room-rxJava3 = { group = "androidx.room", name = "room-rxjava3", version.ref = "room" }
 room-rxJava2 = { group = "androidx.room", name = "room-rxjava2", version.ref = "room" }
-rxjava3-rxandroid = { group = "io.reactivex.rxjava3", name ="rxandroid", version.ref = "rxandroid"}
-rxjava3-rxjava = { group = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava"}
+rxjava3-rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
+rxjava3-rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

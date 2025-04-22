@@ -57,12 +57,12 @@ dependencies {
 
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
-    //ksp(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     implementation(libs.room.ktx)
     implementation(libs.room.rxJava3)
 
-    //implementation(libs.rxjava3.rxandroid)
-    //implementation(libs.rxjava3.rxjava)
+    implementation(libs.rxjava3.rxandroid)
+    implementation(libs.rxjava3.rxjava)
 
 }
