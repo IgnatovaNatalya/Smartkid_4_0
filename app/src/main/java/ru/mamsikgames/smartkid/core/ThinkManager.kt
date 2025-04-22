@@ -1,6 +1,7 @@
 package ru.mamsikgames.smartkid.core
 
 import kotlin.math.min
+import ru.mamsikgames.smartkid.data.db.entity.Operation
 
 class Task (_op1:Int, _op2:Int, _op3:Int, _op:String, _eq:Int?) {
     var op1 = _op1
@@ -238,6 +239,4 @@ object ThinkManager {
 
         return false
     }
-
-
  }
