@@ -1,4 +1,4 @@
-package ru.mamsikgames.smartkid30
+package ru.mamsikgames.smartkid.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ru.mamsikgames.smartkid.R
+import ru.mamsikgames.smartkid.data.entity.UserEntity
 
-class AdapterChangeUserMenu(_selected:Int,_con:Context) : RecyclerView.Adapter<AdapterChangeUserMenu.UserMenuViewHolder>() {
+class AdapterChangeUserMenu(_selected: Int, _con: Context) :
+    RecyclerView.Adapter<AdapterChangeUserMenu.UserMenuViewHolder>() {
 
-    private var usersList = mutableListOf<User>()
+    private var usersList = mutableListOf<UserEntity>()
 
     var selectedUser = _selected
     private var selectedPos = 0
@@ -19,7 +22,7 @@ class AdapterChangeUserMenu(_selected:Int,_con:Context) : RecyclerView.Adapter<A
     lateinit var onClick: ((Int) -> Unit)
 
     class UserMenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvUserName:TextView =itemView.findViewById(R.id.textView_userName)
+        val tvUserName: TextView = itemView.findViewById(R.id.textView_userName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserMenuViewHolder {
@@ -32,15 +35,14 @@ class AdapterChangeUserMenu(_selected:Int,_con:Context) : RecyclerView.Adapter<A
     override fun onBindViewHolder(holder: UserMenuViewHolder, position: Int) {
         val user = usersList[position]
 
-        if (user.userId == selectedUser) selectedPos = holder.bindingAdapterPosition
+        // if (user.userId == selectedUser) selectedPos = holder.bindingAdapterPosition //toDo
 
         val str = user.userName
         holder.tvUserName.text = str
 
         if (selectedPos == position) {
             holder.tvUserName.setTextColor(con.getColor(R.color.white))
-        }
-        else  {
+        } else {
             holder.tvUserName.setTextColor(con.getColor(R.color.yellow))
         }
 
@@ -49,17 +51,15 @@ class AdapterChangeUserMenu(_selected:Int,_con:Context) : RecyclerView.Adapter<A
             selectedUser = usersList[position].userId
             onClick.invoke(usersList[position].userId)
         }
-
-
     }
 
-    private fun setSelected(pos:Int) {
+    private fun setSelected(pos: Int) {
         notifyItemChanged(selectedPos)
         selectedPos = pos
         notifyItemChanged(selectedPos)
     }
 
-    fun setList(list: List<User>) {
+    fun setList(list: List<UserEntity>) {
         usersList.clear()
         usersList.addAll(list)
         notifyDataSetChanged()

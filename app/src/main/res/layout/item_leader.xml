@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <ru.mamsikgames.smartkid30.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.TextViewOutline
         style="@style/TitleStyle2"
         android:textSize="40sp"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textView_itemLeaders_Name"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <ru.mamsikgames.smartkid30.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.TextViewOutline
         android:id="@+id/textView_itemLeaders_Name"
         style="@style/PlayerStyle"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
-    <ru.mamsikgames.smartkid30.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.TextViewOutline
         android:id="@+id/textView_itemLeaders_NumTasks"
         style="@style/OutlinedTextStyle_large"
         android:layout_width="match_parent"

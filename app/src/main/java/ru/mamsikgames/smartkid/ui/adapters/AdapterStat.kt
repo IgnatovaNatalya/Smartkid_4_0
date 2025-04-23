@@ -1,4 +1,4 @@
-package ru.mamsikgames.smartkid30
+package ru.mamsikgames.smartkid.ui.adapters
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater

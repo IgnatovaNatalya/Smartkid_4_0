@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:importantForAccessibility="no" />
 
-        <ru.mamsikgames.smartkid30.TextViewOutline
+        <ru.mamsikgames.smartkid.ui.TextViewOutline
             android:id="@+id/TextView_levelGroup"
             style="@style/OutlinedTextStyleLevelGroup"
             android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:importantForAccessibility="no" />
 
-            <ru.mamsikgames.smartkid30.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.TextViewOutline
                 android:id="@+id/TextView_Level"
                 style="@style/OutlinedTextStyleLevels"
                 android:layout_width="65sp"

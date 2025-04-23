@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
-import ru.mamsikgames.smartkid.data.db.entity.Round
+import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.ui.TextViewOutline
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
@@ -14,7 +14,7 @@ import ru.mamsikgames.smartkid.R
 
 
 class DialogRoundResults( activity: Activity,themeResId:Int,
-                          _round:Round,_level:String,_place:Int) : Dialog(activity,themeResId) {
+                          _round:RoundEntity,_level:String,_place:Int) : Dialog(activity,themeResId) {
 
     private val round = _round
     private val level = _level

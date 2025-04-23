@@ -69,7 +69,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ru.mamsikgames.smartkid30.TextViewOutline
+        <ru.mamsikgames.smartkid.ui.TextViewOutline
             android:id="@+id/textView_Title1"
             style="@style/TitleStyle1"
             android:layout_width="105sp"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <ru.mamsikgames.smartkid30.TextViewOutline
+        <ru.mamsikgames.smartkid.ui.TextViewOutline
             android:id="@+id/textView_Title2"
             android:layout_width="220sp"
             android:layout_height="85sp"
@@ -96,7 +96,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ru.mamsikgames.smartkid30.TextViewOutline
+        <ru.mamsikgames.smartkid.ui.TextViewOutline
             android:id="@+id/textView_Player"
             style="@style/PlayerStyle"
             android:layout_width="match_parent"

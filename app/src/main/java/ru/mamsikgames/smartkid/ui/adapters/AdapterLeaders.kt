@@ -1,4 +1,4 @@
-package ru.mamsikgames.smartkid30
+package ru.mamsikgames.smartkid.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
+import ru.mamsikgames.smartkid.R
+import ru.mamsikgames.smartkid.domain.model.Leader
 
 
 class AdapterLeaders : RecyclerView.Adapter<AdapterLeaders.LeadersViewHolder>() {

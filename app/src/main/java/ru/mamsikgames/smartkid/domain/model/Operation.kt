@@ -1,13 +1,6 @@
-package ru.mamsikgames.smartkid.data.db.entity
+package ru.mamsikgames.smartkid.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.io.Serializable
-
-
-@Entity
 data class Operation(
-    @PrimaryKey(autoGenerate = true)
     val id: Int? = 0,
     val name: String = "",
     val codeName: String = "",
@@ -23,5 +16,4 @@ data class Operation(
     val relationOp2: Int? = null,
     val ord: Int? = null,
     val groupName: String = "",
-
-    ) : Serializable
+)

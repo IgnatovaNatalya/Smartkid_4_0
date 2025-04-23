@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="user_menu_text_size_normal">22sp</dimen>
+    <dimen name="user_menu_text_size_selected">32sp</dimen>
+</resources>

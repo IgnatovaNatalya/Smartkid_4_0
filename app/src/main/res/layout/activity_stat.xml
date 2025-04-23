@@ -10,75 +10,73 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/imageView_backWinter"
-            android:foregroundGravity="center"
-            app:srcCompat="@drawable/back_winter"
             android:layout_width="880dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            app:srcCompat="@drawable/back_winter" />
     </LinearLayout>
 
-
-
-    <ru.mamsikgames.smartkid30.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.TextViewOutline
         android:id="@+id/textView_StatTitle"
         style="@style/TitleStyle2"
         android:layout_width="match_parent"
         android:layout_height="90sp"
         android:layout_marginBottom="-40dp"
-        android:textSize="40sp"
-
         android:text="Статистика"
-        app:layout_constraintBottom_toTopOf="@+id/textView_Stat_userName"
-        app:layout_constraintStart_toStartOf="parent"/>
 
-    <ru.mamsikgames.smartkid30.TextViewOutline
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_Stat_userName"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ru.mamsikgames.smartkid.ui.TextViewOutline
         android:id="@+id/textView_Stat_userName"
         style="@style/PlayerStyle"
         android:layout_width="match_parent"
         android:layout_height="110sp"
         android:layout_marginTop="100dp"
-        tools:text="Маша"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Маша" />
 
 
     <ImageView
         android:id="@+id/imageView_bgStat"
         android:layout_width="0dp"
         android:layout_height="500dp"
-        app:srcCompat="@drawable/bg_dialog_big"
-
         android:layout_marginTop="35dp"
 
-        app:layout_constraintTop_toBottomOf="@+id/textView_Stat_userName"
+        app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView_Stat_userName"
+        app:srcCompat="@drawable/bg_dialog_big" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_Stat"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-        app:layout_constraintTop_toTopOf="@+id/imageView_bgStat"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_bgStat"
-
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="20dp"
-
         android:layout_width="match_parent"
         android:layout_height="0dp"
 
-        tools:listitem="@layout/item_stat"
-        />
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="20dp"
+
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_bgStat"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView_bgStat"
+
+        tools:listitem="@layout/item_stat" />
 
 
     <ImageView

@@ -9,7 +9,7 @@ import ru.mamsikgames.smartkid.R
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.ui.TextViewOutline
 import ru.mamsikgames.smartkid.ui.viewmodel.SmartViewModel
-import ru.mamsikgames.smartkid30.AdapterStat
+import ru.mamsikgames.smartkid.ui.adapters.AdapterStat
 
 class StatActivity : AppCompatActivity() {
 
@@ -50,5 +50,10 @@ class StatActivity : AppCompatActivity() {
             gameSounds.playSoundExit()
             finish()//?
         }
+    }
+
+    companion object {//повторяются
+        const val EXTRA_USER_ID = "EXTRA_USER_ID"
+        const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
     }
 }

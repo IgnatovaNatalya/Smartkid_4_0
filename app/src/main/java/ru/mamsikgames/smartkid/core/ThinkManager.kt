@@ -1,7 +1,7 @@
 package ru.mamsikgames.smartkid.core
 
 import kotlin.math.min
-import ru.mamsikgames.smartkid.data.db.entity.Operation
+import ru.mamsikgames.smartkid.data.entity.OperationEntity
 
 class Task (_op1:Int, _op2:Int, _op3:Int, _op:String, _eq:Int?) {
     var op1 = _op1
@@ -34,7 +34,7 @@ object ThinkManager {
 
     private var taskStorage = mutableMapOf<Int,Task>()
 
-    fun newTask(oper:Operation):String {
+    fun newTask(oper:OperationEntity):String {
         //ограничения по оператору , если они есть, должны быть оба заданы. По сумме тоже
         //если не заданы ограничения, то тоже оба
         //обязательно должно быть задно ограничение по двум из трех параметров задачи

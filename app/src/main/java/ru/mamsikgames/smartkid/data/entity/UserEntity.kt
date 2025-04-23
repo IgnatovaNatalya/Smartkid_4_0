@@ -1,15 +1,13 @@
-package ru.mamsikgames.smartkid.data.db.entity
+package ru.mamsikgames.smartkid.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity
-data class User(
+@Entity(tableName = "User")
+data class UserEntity(
     @PrimaryKey//(autoGenerate = true)
     var userId: Int = 0,
     var userName: String = "",
-    var avaId: Int = 0,
-    var dateBirth: String? = null,
-    var current: Boolean = false
+    var isCurrent: Boolean = false
 ) : Serializable

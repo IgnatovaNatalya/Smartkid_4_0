@@ -1,4 +1,4 @@
-package ru.mamsikgames.smartkid.data.db.dao
+package ru.mamsikgames.smartkid.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -12,40 +12,39 @@ import io.reactivex.rxjava3.core.Single
 import ru.mamsikgames.smartkid.domain.model.Leader
 import ru.mamsikgames.smartkid.domain.model.Rate
 import ru.mamsikgames.smartkid.domain.model.RoundWithName
-import ru.mamsikgames.smartkid.data.db.entity.Operation
-import ru.mamsikgames.smartkid.data.db.entity.Round
-import ru.mamsikgames.smartkid.data.db.entity.User
-
+import ru.mamsikgames.smartkid.data.entity.OperationEntity
+import ru.mamsikgames.smartkid.data.entity.RoundEntity
+import ru.mamsikgames.smartkid.data.entity.UserEntity
 
 @Dao
 interface SmartDao {
 
-    @Query("INSERT INTO User (userName,avaId,current) values(:strName,0,1)")
+    @Query("INSERT INTO User (userName, isCurrent) values(:strName,1)")
     fun addUser(strName:String): Completable
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
-    fun insertRound(r: Round): Single<Long>
+    fun insertRound(r: RoundEntity): Single<Long>
 
     @Update
-    fun updateRound(r: Round): Completable
+    fun updateRound(r: RoundEntity): Completable
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
-    fun insertOperation(op: Operation): Completable
+    fun insertOperation(op: OperationEntity): Completable
 
     @Update
-    fun setCurrent(u: User): Completable
+    fun setCurrent(u: UserEntity): Completable
 
-    @Query("UPDATE User set current=0")
+    @Query("UPDATE User set isCurrent=0")
     fun removeCurrent(): Completable
 
-    @Query("UPDATE User set current=(userId =:userId)")
+    @Query("UPDATE User set isCurrent=(userId =:userId)")
     fun setCurrentUser(userId:Int): Completable
 
     @Query("SELECT Round.*, Operation.codeName FROM Round INNER JOIN Operation ON Round.operationId = Operation.id WHERE Round.userId=:userId ORDER BY Round.roundEnd DESC")
     fun getListRoundsWithNames(userId:Int): Flowable<List<RoundWithName>>
 
     @Query("SELECT * FROM Round WHERE userId =:userId AND operationId= :operationId AND finished = 0 ORDER BY id DESC LIMIT 1")
-    fun getPendingRound(userId:Int, operationId:Int): Maybe<Round>
+    fun getPendingRound(userId:Int, operationId:Int): Maybe<RoundEntity>
 
     @Query("SELECT SUM(numCorrect)*100/SUM(numEfforts) AS rate FROM (select * from Round where finished = 1) GROUP BY userId HAVING userId=:userId ")
     fun getRate(userId:Int): Flowable<Int>
@@ -59,17 +58,17 @@ interface SmartDao {
     fun getLeaders(): Flowable<List<Leader>>
 
     @Query("SELECT * FROM User")
-    fun getListUsers(): Flowable<List<User>>
+    fun getListUsers(): Flowable<List<UserEntity>>
 
-    @Query("SELECT * FROM User where current=1")
-    fun getCurrentUser(): Flowable<User>
+    @Query("SELECT * FROM User where isCurrent=1")
+    fun getCurrentUser(): Flowable<UserEntity>
 
     @Query("SELECT * FROM Operation ORDER BY ord")
-    fun getListOperations(): Flowable<List<Operation>>
+    fun getListOperations(): Flowable<List<OperationEntity>>
 
     @Query("SELECT COUNT(id) FROM Operation")
     fun getCountOperations(): Flowable<Int>
 
     @Query("SELECT * FROM Operation WHERE id =:id")
-    fun getOperation(id:Int): Single<Operation>
+    fun getOperation(id:Int): Single<OperationEntity>
 }

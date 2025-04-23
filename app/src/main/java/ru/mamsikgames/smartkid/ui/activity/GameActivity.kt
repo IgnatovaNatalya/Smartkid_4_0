@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.core.ThinkManager
-import ru.mamsikgames.smartkid.data.db.entity.Operation
-import ru.mamsikgames.smartkid.data.db.entity.Round
+import ru.mamsikgames.smartkid.data.entity.OperationEntity
+import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.ui.viewmodel.SmartViewModel
 import java.lang.System.currentTimeMillis
 import ru.mamsikgames.smartkid.R
@@ -22,7 +22,7 @@ class GameActivity : AppCompatActivity() {
     private var inputNum: Int =0
 
     private lateinit var thinkManager: ThinkManager
-    private lateinit var operation: Operation
+    private lateinit var operation: OperationEntity
 
     private var gameSounds = GameSounds
 
@@ -32,7 +32,7 @@ class GameActivity : AppCompatActivity() {
 
     private var state = false
 
-    private var round = Round(
+    private var round = RoundEntity(
         null,
         currentUserId,
         0,
@@ -55,7 +55,7 @@ class GameActivity : AppCompatActivity() {
         supportActionBar?.hide() ///
 
         if (!intent.hasExtra(EXTRA_OPERATION)) finish()
-        operation = intent.extras?.get(EXTRA_OPERATION) as Operation
+        operation = intent.extras?.get(EXTRA_OPERATION) as OperationEntity
         if (operation.id != null) operId = operation.id!!
 
         currentUserId = intent.getIntExtra(EXTRA_USER_ID,0)
@@ -161,7 +161,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun newTask() {
         //val str =
-        thinkManager.newTask(Operation(
+        thinkManager.newTask(OperationEntity(
             operation.id,
             operation.name,
             operation.codeName,
@@ -341,5 +341,11 @@ class GameActivity : AppCompatActivity() {
         ivBtn8.setOnClickListener { pressNum(8) }
         ivBtn9.setOnClickListener { pressNum(9) }
         ivBtn0.setOnClickListener { pressNum(0) }
+    }
+
+    companion object { //повторяются
+        const val EXTRA_OPERATION = "EXTRA_OPERATION_PARAMS"
+        const val EXTRA_USER_ID = "EXTRA_USER_ID"
+        const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
     }
 }

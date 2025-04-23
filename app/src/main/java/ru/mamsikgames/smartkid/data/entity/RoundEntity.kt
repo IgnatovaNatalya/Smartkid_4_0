@@ -1,12 +1,12 @@
-package ru.mamsikgames.smartkid.data.db.entity
+package ru.mamsikgames.smartkid.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 import java.io.Serializable
 
-@Entity
-data class Round(
+@Entity(tableName = "Round")
+data class RoundEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
     var userId: Int = 0,

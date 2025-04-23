@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+
     <color name="white">#FFFFFFFF</color>
+
+    <color name ="yellow">#fabe27</color>
+    <color name="orange_yellow">#fbc232</color>
+    <color name="blue">#64c9d1</color>
+    <color name ="pink">#f58fa1</color>
+    <color name="red">#e5252e</color>
+    <color name="black">#3b1618</color>
+
+    <color name="letter_shadow_brown">#c5881b</color>
+    <color name="letter_shadow_light_beige">#fef5d8</color>
+
+    <color name="green">#5cc240</color>
+    <color name="letter_shadow_green">#386b2c</color>
+    <color name="letter_shadow_light_green">#def1cb</color>
+
+    <color name="letter_shadow_wine_red">#ce456e</color>
+    <color name="letter_shadow_light_pink">#fddde0</color>
+
+
+    <color name="transparent">#00000000</color>
+
+
+    <color name="letter_shadow_transparent">#6e676260</color>
+
 </resources>

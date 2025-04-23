@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="@id/imageView_transparent"
         app:layout_constraintEnd_toEndOf="@id/imageView_transparent"/>
 
-    <ru.mamsikgames.smartkid30.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.TextViewOutline
         android:id="@+id/textView_Ok"
         style="@style/OutlinedButtonStyle2"
         android:layout_width="100dp"
