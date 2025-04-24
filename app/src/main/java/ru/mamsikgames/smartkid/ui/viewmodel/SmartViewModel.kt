@@ -31,8 +31,6 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
     private val _recordRounds = MutableLiveData<List<RoundWithName>>()
     var recordRounds: LiveData<List<RoundWithName>> = _recordRounds
 
-    private val _recordPendingRound = MutableLiveData<RoundEntity>()
-    var recordPendingRound: LiveData<RoundEntity> = _recordPendingRound
 
     private val _recordRates = MutableLiveData<List<Rate>>()
     var recordRates: LiveData<List<Rate>> = _recordRates
@@ -40,8 +38,7 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
     private val _recordLeaders = MutableLiveData<List<Leader>>()
     var recordLeaders: LiveData<List<Leader>> = _recordLeaders
 
-    private val _recordNewRound = MutableLiveData<Long>()
-    var recordNewRound: LiveData<Long> = _recordNewRound
+
 
     private val _recordOperations = MutableLiveData<List<LevelEntity>>()
     var recordOperations: LiveData<List<LevelEntity>> = _recordOperations
@@ -60,28 +57,6 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
             }
     }
 
-    fun insertRound(r: RoundEntity) {
-        smartRepository.insertRound(r)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _recordNewRound.postValue(it)
-            }, {
-            }).let {
-                compositeDisposable.add(it)
-            }
-    }
-
-    fun updateRound(r: RoundEntity) {
-        smartRepository.updateRound(r)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-            }, {
-            }).let {
-                compositeDisposable.add(it)
-            }
-    }
 
     fun insertOperation(op: LevelEntity) {
         smartRepository.insertOperation(op)
@@ -119,17 +94,6 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
             }
     }
 
-    fun getPendingRound(userId: Int, operationId: Int) {
-        smartRepository.getPendingRound(userId, operationId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _recordPendingRound.postValue(it)
-            }, {
-            }).let {
-                compositeDisposable.add(it)
-            }
-    }
 
     fun getRates(userId: Int) {
         smartRepository.getRates(userId)

@@ -19,18 +19,20 @@ import ru.mamsikgames.smartkid.data.entity.UserEntity
 @Dao
 interface SmartDao {
 
-    @Query("INSERT INTO User (userName, isCurrent) values(:strName,1)")
-    fun addUser(strName:String): Completable
-
+//round
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     fun insertRound(r: RoundEntity): Single<Long>
 
     @Update
     fun updateRound(r: RoundEntity): Completable
 
-    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
-    fun insertOperation(op: LevelEntity): Completable
+    @Query("SELECT * FROM Round WHERE userId =:userId AND levelId= :levelId AND finished = 0 ORDER BY id DESC LIMIT 1")
+    fun getPendingRound(userId:Int, levelId:Int): Maybe<RoundEntity>
 
+    @Query("SELECT Round.*, Level.codeName FROM Round INNER JOIN Level ON Round.levelId = Level.id WHERE Round.userId=:userId ORDER BY Round.roundEnd DESC")
+    fun getListRoundsWithNames(userId:Int): Flowable<List<RoundWithName>>
+
+//user
     @Update
     fun setCurrent(u: UserEntity): Completable
 
@@ -40,12 +42,16 @@ interface SmartDao {
     @Query("UPDATE User set isCurrent=(userId =:userId)")
     fun setCurrentUser(userId:Int): Completable
 
-    @Query("SELECT Round.*, Level.codeName FROM Round INNER JOIN Level ON Round.levelId = Level.id WHERE Round.userId=:userId ORDER BY Round.roundEnd DESC")
-    fun getListRoundsWithNames(userId:Int): Flowable<List<RoundWithName>>
+    @Query("INSERT INTO User (userName, isCurrent) values(:strName,1)")
+    fun addUser(strName:String): Completable
 
-    @Query("SELECT * FROM Round WHERE userId =:userId AND levelId= :levelId AND finished = 0 ORDER BY id DESC LIMIT 1")
-    fun getPendingRound(userId:Int, levelId:Int): Maybe<RoundEntity>
+    @Query("SELECT * FROM User")
+    fun getListUsers(): Flowable<List<UserEntity>>
 
+    @Query("SELECT * FROM User WHERE isCurrent = 1")
+    fun getCurrentUser(): Flowable<UserEntity>
+
+ //leaders
     @Query("SELECT SUM(numCorrect)*100/SUM(numEfforts) AS rate FROM (select * from Round where finished = 1) GROUP BY userId HAVING userId=:userId ")
     fun getRate(userId:Int): Flowable<Int>
 
@@ -57,18 +63,18 @@ interface SmartDao {
             "GROUP BY userId ORDER BY rate DESC , tasks DESC")
     fun getLeaders(): Flowable<List<Leader>>
 
-    @Query("SELECT * FROM User")
-    fun getListUsers(): Flowable<List<UserEntity>>
 
-    @Query("SELECT * FROM User WHERE isCurrent = 1") //
-    fun getCurrentUser(): Flowable<UserEntity>
-
+//level
     @Query("SELECT * FROM Level ORDER BY ord")
     fun getListOperations(): Flowable<List<LevelEntity>>
+
 
     @Query("SELECT COUNT(id) FROM Level")
     fun getCountOperations(): Flowable<Int>
 
     @Query("SELECT * FROM Level WHERE id =:id")
     fun getOperation(id:Int): Single<LevelEntity>
+
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
+    fun insertLevel(op: LevelEntity): Completable
 }

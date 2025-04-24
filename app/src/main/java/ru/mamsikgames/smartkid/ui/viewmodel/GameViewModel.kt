@@ -8,11 +8,11 @@ import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.domain.interactor.ChooseLevelInteractor
+import ru.mamsikgames.smartkid.domain.interactor.GameInteractor
 
-//class ChooseLevelViewModel(private val smartRepository: SmartRepository) : ViewModel()  {
-
-class ChooseLevelViewModel(private val chooseLevelInteractor: ChooseLevelInteractor) : ViewModel()  {
+class GameViewModel(private val gameInteractor: GameInteractor) : ViewModel()  {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -22,29 +22,47 @@ class ChooseLevelViewModel(private val chooseLevelInteractor: ChooseLevelInterac
     private val _recordOperations = MutableLiveData<List<LevelEntity>>()
     var recordLevels:LiveData<List<LevelEntity>> = _recordOperations
 
-    fun getCurrentUser() {
-        chooseLevelInteractor.getCurrentUser()
+    private val _recordNewRound = MutableLiveData<Long>()
+    var recordNewRound: LiveData<Long> = _recordNewRound
+
+    private val _recordPendingRound = MutableLiveData<RoundEntity>()
+    var recordPendingRound: LiveData<RoundEntity> = _recordPendingRound
+
+    fun getPendingRound(userId: Int, operationId: Int) {
+        gameInteractor.getPendingRound(userId, operationId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                _recordCurUser.postValue(it)
+                _recordPendingRound.postValue(it)
             }, {
             }).let {
                 compositeDisposable.add(it)
             }
     }
 
-    fun getListOperations() {
-        chooseLevelInteractor.getListOperations()
+    fun insertRound(r: RoundEntity) {
+        gameInteractor.insertRound(r)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                _recordOperations.postValue(it)
+                _recordNewRound.postValue(it)
             }, {
             }).let {
                 compositeDisposable.add(it)
             }
     }
+
+    fun updateRound(r: RoundEntity) {
+        gameInteractor.updateRound(r)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+            }, {
+            }).let {
+                compositeDisposable.add(it)
+            }
+    }
+
     override fun onCleared() {
         compositeDisposable.dispose()
         compositeDisposable.clear()

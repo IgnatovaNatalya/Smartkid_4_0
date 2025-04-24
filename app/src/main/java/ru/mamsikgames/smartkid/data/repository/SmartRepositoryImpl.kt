@@ -28,7 +28,7 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
     }
 
     override fun insertOperation(op: LevelEntity): Completable {
-        return smartDao.insertOperation(op)
+        return smartDao.insertLevel(op)
     }
 
     override fun setCurrentUser(userId: Int): Completable {

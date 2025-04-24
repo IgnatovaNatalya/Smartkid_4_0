@@ -8,27 +8,33 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.core.ThinkManager
 import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
-import ru.mamsikgames.smartkid.ui.viewmodel.SmartViewModel
 import java.lang.System.currentTimeMillis
 import ru.mamsikgames.smartkid.R
+import ru.mamsikgames.smartkid.databinding.ActivityGameBinding
+import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
+import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
+import kotlin.getValue
 
 
 class GameActivity : AppCompatActivity() {
     private var inputNum: Int =0
 
     private lateinit var thinkManager: ThinkManager
-    private lateinit var operation: LevelEntity
+    private lateinit var level: LevelEntity
+
+    private val viewModel: GameViewModel  by viewModel()
+    private lateinit var binding: ActivityGameBinding
 
     private var gameSounds = GameSounds
 
     private var currentUserId = 1
     private var currentUserName = ""
-    private  var operId:Int =0
+    private  var levelId:Int =0
 
     private var state = false
 
@@ -46,41 +52,39 @@ class GameActivity : AppCompatActivity() {
         0
     )
 
-    private lateinit var viewModel:SmartViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game)
 
+        binding = ActivityGameBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.hide() ///
 
-        if (!intent.hasExtra(EXTRA_OPERATION)) finish()
-        operation = intent.extras?.get(EXTRA_OPERATION) as LevelEntity
-        if (operation.id != null) operId = operation.id!!
+        if (!intent.hasExtra(EXTRA_LEVEL)) finish()
+        level = intent.extras?.get(EXTRA_LEVEL) as LevelEntity
+        if (level.id != null) levelId = level.id!!
 
         currentUserId = intent.getIntExtra(EXTRA_USER_ID,0)
         currentUserName = intent.getStringExtra(EXTRA_USER_NAME).toString()
 
-        round.levelId = operId
+        round.levelId = levelId
         round.userId = currentUserId
 
         thinkManager = ThinkManager
-        viewModel = ViewModelProvider(this)[SmartViewModel::class.java]
 
-        val tvUserName = findViewById<TextView>(R.id.textView_Game_userName)
-        tvUserName.text = currentUserName
 
-        val tvLevelName = findViewById<TextView>(R.id.textView_Game_levelName)
-        tvLevelName.text = operation.codeName
+        //val tvUserName = findViewById<TextView>(R.id.textView_Game_userName)
+        binding.textViewGameUserName.text = currentUserName
+
+        //val tvLevelName = findViewById<TextView>(R.id.textView_Game_levelName)
+        binding.textViewGameLevelName.text = level.codeName
 
         setListeners()
 
-
         val tvRound = findViewById<TextView>(R.id.textView_Game_Round)
 
-
-    //get pending round
-        viewModel.getPendingRound(currentUserId,operId)
+        //get pending round
+        viewModel.getPendingRound(currentUserId,levelId)
         viewModel.recordPendingRound.observe(this) {
             if (it!=null) {
                 round =  it
@@ -97,12 +101,11 @@ class GameActivity : AppCompatActivity() {
         }
 
     //create & print task
-        if (!thinkManager.getTask(operId))
+        if (!thinkManager.getTask(levelId))
             newTask()
 
         printTask(null)
         setOkState(state)
-
     }
 
     private fun finishAndSave() {
@@ -116,7 +119,7 @@ class GameActivity : AppCompatActivity() {
             round.finished = true
             this.updateRound()
             dialogFinishRound.dismiss()
-            showResult()
+            //showResult()
         }
 
         dialogFinishRound.onClickCancel ={
@@ -128,74 +131,26 @@ class GameActivity : AppCompatActivity() {
         dialogFinishRound.show()
     }
 
-    private fun showResult() {
-        var place:Int
-
-        viewModel.getRates(currentUserId)
-
-        viewModel.recordRates.observe(this) { rates ->
-            if (rates != null) {
-                val myResult = rates.find { it.myPlace }!!
-                place = rates.indexOf(myResult) +1
-
-                val dialogRoundResults = DialogRoundResults(this, R.style.dialog_style,round,operation.codeName,place)
-
-                dialogRoundResults.onClickButton = {
-                    gameSounds.playSoundPlay()
-                    dialogRoundResults.dismiss()
-                    finish()
-                }
-
-                dialogRoundResults.onClickCancel = {
-                    gameSounds.playSoundErase()
-                    dialogRoundResults.dismiss()
-                    finish()
-                }
-
-                gameSounds.playSoundRestart()
-                dialogRoundResults.show()
-            }}
-
-        //gameSounds.playSoundRestart()
-    }
 
     private fun newTask() {
         //val str =
         thinkManager.newTask(LevelEntity(
-            operation.id,
-            operation.name,
-            operation.codeName,
-            operation.op1Min,
-            operation.op1Max,
-            operation.op2Min,
-            operation.op2Max,
-            operation.resMin,
-            operation.resMax,
-            operation.operation,
-            operation.equation,
-            operation.relationOp1,
-            operation.relationOp2))
+            level.id,
+            level.name,
+            level.codeName,
+            level.op1Min,
+            level.op1Max,
+            level.op2Min,
+            level.op2Max,
+            level.resMin,
+            level.resMax,
+            level.operation,
+            level.equation,
+            level.relationOp1,
+            level.relationOp2))
 
         round.numTasks++
     }
-
-    /*private fun clearRound() {
-        with(round) {
-
-            this.id = null
-            this.roundBegin= currentTimeMillis()
-            this.roundEnd=0L
-            this.finished = false
-            this.numTasks = 0
-            this.numEfforts = 0
-            this.numCorrect = 0
-            this.numWrong = 0
-            this.numExits = 0
-        }
-        updateRound()
-        setCorrect(0)
-        setWrong(0)
-    }*/
 
     private fun updateRound() {
         if (round.id !=null)
@@ -245,7 +200,7 @@ class GameActivity : AppCompatActivity() {
 
         val str = if (withInput!=null) thinkManager.printTask(withInput) else thinkManager.printTask()
 
-        when (operation.equation) {
+        when (level.equation) {
             2 -> {
                 val startSpan = if (thinkManager.op1> 9 ) 5 else 4
                 val lenSpan = if (inputNum>9) 2 else 1
@@ -314,37 +269,23 @@ class GameActivity : AppCompatActivity() {
             }
         }
 
-        val ivBtnBack = findViewById<ImageView>(R.id.button_back)
-        ivBtnBack.setOnClickListener { finish() }
+        binding.buttonBack.setOnClickListener { finish() }
+        binding.correctCounter.setOnClickListener { finishAndSave() }
 
-        val tvCounter:TextView = findViewById(R.id.correct_counter)
-        tvCounter.setOnClickListener { finishAndSave() }
-
-        val ivBtn1 = findViewById<ImageView>(R.id.button01)
-        val ivBtn2 = findViewById<ImageView>(R.id.button02)
-        val ivBtn3 = findViewById<ImageView>(R.id.button03)
-        val ivBtn4 = findViewById<ImageView>(R.id.button04)
-        val ivBtn5 = findViewById<ImageView>(R.id.button05)
-        val ivBtn6 = findViewById<ImageView>(R.id.button06)
-        val ivBtn7 = findViewById<ImageView>(R.id.button07)
-        val ivBtn8 = findViewById<ImageView>(R.id.button08)
-        val ivBtn9 = findViewById<ImageView>(R.id.button09)
-        val ivBtn0 = findViewById<ImageView>(R.id.button00)
-
-        ivBtn1.setOnClickListener { pressNum(1) }
-        ivBtn2.setOnClickListener { pressNum(2) }
-        ivBtn3.setOnClickListener { pressNum(3) }
-        ivBtn4.setOnClickListener { pressNum(4) }
-        ivBtn5.setOnClickListener { pressNum(5) }
-        ivBtn6.setOnClickListener { pressNum(6) }
-        ivBtn7.setOnClickListener { pressNum(7) }
-        ivBtn8.setOnClickListener { pressNum(8) }
-        ivBtn9.setOnClickListener { pressNum(9) }
-        ivBtn0.setOnClickListener { pressNum(0) }
+        binding.button01.setOnClickListener { pressNum(1) }
+        binding.button02.setOnClickListener { pressNum(2) }
+        binding.button03.setOnClickListener { pressNum(3) }
+        binding.button04.setOnClickListener { pressNum(4) }
+        binding.button05.setOnClickListener { pressNum(5) }
+        binding.button06.setOnClickListener { pressNum(6) }
+        binding.button07.setOnClickListener { pressNum(7) }
+        binding.button08.setOnClickListener { pressNum(8) }
+        binding.button09.setOnClickListener { pressNum(9) }
+        binding.button00.setOnClickListener { pressNum(0) }
     }
 
     companion object { //повторяются
-        const val EXTRA_OPERATION = "EXTRA_OPERATION_PARAMS"
+        const val EXTRA_LEVEL = "EXTRA_OPERATION_PARAMS"
         const val EXTRA_USER_ID = "EXTRA_USER_ID"
         const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
     }

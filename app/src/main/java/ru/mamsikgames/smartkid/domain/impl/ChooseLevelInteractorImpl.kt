@@ -16,6 +16,4 @@ class ChooseLevelInteractorImpl(private val smartRepository: SmartRepositoryImpl
         val listOperations = smartRepository.getListOperations()
         return listOperations
     }
-
-
 }
