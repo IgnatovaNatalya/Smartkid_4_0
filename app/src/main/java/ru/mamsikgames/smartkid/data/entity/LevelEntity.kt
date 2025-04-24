@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 
-@Entity(tableName = "Operation")
-data class OperationEntity(
+@Entity(tableName = "Level")
+data class LevelEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = 0,
     val name: String = "",
@@ -22,6 +22,6 @@ data class OperationEntity(
     val relationOp1: Int? = null,
     val relationOp2: Int? = null,
     val ord: Int? = null,
-    val groupName: String = "",
+    val levelGroup: Int? = null,
 
     ) : Serializable

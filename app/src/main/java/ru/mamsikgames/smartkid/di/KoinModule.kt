@@ -9,20 +9,10 @@ import ru.mamsikgames.smartkid.domain.impl.ChooseLevelInteractorImpl
 import ru.mamsikgames.smartkid.domain.interactor.ChooseLevelInteractor
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
 
-//val KoinModule = module {
-//
-//    single { SmartDb.getInstance(get()) }
-//    single { get<SmartDb>().smartDao() }
-//    single { SmartRepository(get()) }
-//
-//    single <ChooseLevelInteractor> { ChooseLevelInteractorImpl(get()) }
-//    viewModel { ChooseLevelViewModel(get()) }
-//}
-
 val DatabaseModule = module {
     single {
         Room.databaseBuilder(get(), SmartDb::class.java, "smart_db")
-            .createFromAsset("smart_db4.db")
+            //.createFromAsset("smart_db.db")
             .build()
     }
     single { get<SmartDb>().smartDao() }

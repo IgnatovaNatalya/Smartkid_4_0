@@ -8,7 +8,7 @@ import ru.mamsikgames.smartkid.domain.model.Leader
 import ru.mamsikgames.smartkid.domain.model.Rate
 import ru.mamsikgames.smartkid.domain.model.RoundWithName
 import ru.mamsikgames.smartkid.data.dao.SmartDao
-import ru.mamsikgames.smartkid.data.entity.OperationEntity
+import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.SmartRepository
@@ -27,7 +27,7 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
         return smartDao.updateRound(r)
     }
 
-    override fun insertOperation(op: OperationEntity): Completable {
+    override fun insertOperation(op: LevelEntity): Completable {
         return smartDao.insertOperation(op)
     }
 
@@ -63,11 +63,7 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
         return smartDao.getCurrentUser()
     }
 
-//    fun getCurUser(): UserEntity {
-//        return smartDao.getCurUser()
-//    }
-
-    override fun getListOperations(): Flowable<List<OperationEntity>> {
+    override fun getListOperations(): Flowable<List<LevelEntity>> {
         return smartDao.getListOperations()
     }
 
@@ -75,7 +71,7 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
         return smartDao.getCountOperations()
     }
 
-    override fun getOperation(operationId: Int): Single<OperationEntity> {
+    override fun getOperation(operationId: Int): Single<LevelEntity> {
         return smartDao.getOperation(operationId)
     }
 }

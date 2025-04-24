@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.core.ThinkManager
-import ru.mamsikgames.smartkid.data.entity.OperationEntity
+import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.ui.viewmodel.SmartViewModel
 import java.lang.System.currentTimeMillis
@@ -22,7 +22,7 @@ class GameActivity : AppCompatActivity() {
     private var inputNum: Int =0
 
     private lateinit var thinkManager: ThinkManager
-    private lateinit var operation: OperationEntity
+    private lateinit var operation: LevelEntity
 
     private var gameSounds = GameSounds
 
@@ -55,13 +55,13 @@ class GameActivity : AppCompatActivity() {
         supportActionBar?.hide() ///
 
         if (!intent.hasExtra(EXTRA_OPERATION)) finish()
-        operation = intent.extras?.get(EXTRA_OPERATION) as OperationEntity
+        operation = intent.extras?.get(EXTRA_OPERATION) as LevelEntity
         if (operation.id != null) operId = operation.id!!
 
         currentUserId = intent.getIntExtra(EXTRA_USER_ID,0)
         currentUserName = intent.getStringExtra(EXTRA_USER_NAME).toString()
 
-        round.operationId = operId
+        round.levelId = operId
         round.userId = currentUserId
 
         thinkManager = ThinkManager
@@ -161,7 +161,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun newTask() {
         //val str =
-        thinkManager.newTask(OperationEntity(
+        thinkManager.newTask(LevelEntity(
             operation.id,
             operation.name,
             operation.codeName,

@@ -1,23 +1,22 @@
 package ru.mamsikgames.smartkid.data.db
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.mamsikgames.smartkid.data.dao.SmartDao
-import ru.mamsikgames.smartkid.data.entity.OperationEntity
+import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
+import ru.mamsikgames.smartkid.data.entity.GroupLevelEntity
 
 
 @Database(
-    entities = [RoundEntity::class, UserEntity::class, OperationEntity::class],
-    version = 1,
-    exportSchema = true//,
+    entities = [RoundEntity::class, UserEntity::class, LevelEntity::class, GroupLevelEntity::class],
+    version = 4)
+    //exportSchema = true,
     //autoMigrations = [
     //    AutoMigration(from = 3, to = 4)
     //]
-)
+
 
 abstract class SmartDb : RoomDatabase() {
     abstract fun smartDao(): SmartDao

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.mamsikgames.smartkid.data.entity.OperationEntity
+import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -19,8 +19,8 @@ class ChooseLevelViewModel(private val chooseLevelInteractor: ChooseLevelInterac
     private val _recordCurUser = MutableLiveData<UserEntity>()
     var recordCurUser: LiveData<UserEntity> = _recordCurUser
 
-    private val _recordOperations = MutableLiveData<List<OperationEntity>>()
-    var recordOperations:LiveData<List<OperationEntity>> = _recordOperations
+    private val _recordOperations = MutableLiveData<List<LevelEntity>>()
+    var recordOperations:LiveData<List<LevelEntity>> = _recordOperations
 
     fun getCurrentUser() {
         chooseLevelInteractor.getCurrentUser()

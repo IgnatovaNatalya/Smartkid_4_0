@@ -5,16 +5,17 @@ import androidx.lifecycle.*
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.mamsikgames.smartkid.data.entity.OperationEntity
+import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.SmartRepository
 import ru.mamsikgames.smartkid.domain.model.Leader
 import ru.mamsikgames.smartkid.domain.model.Rate
 import ru.mamsikgames.smartkid.domain.model.RoundWithName
+import org.koin.core.component.KoinComponent
 
 
-class SmartViewModel(application: Application) : AndroidViewModel(application) {
+class SmartViewModel(application: Application) : AndroidViewModel(application), KoinComponent {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -31,24 +32,23 @@ class SmartViewModel(application: Application) : AndroidViewModel(application) {
     var recordRounds: LiveData<List<RoundWithName>> = _recordRounds
 
     private val _recordPendingRound = MutableLiveData<RoundEntity>()
-    var recordPendingRound:LiveData<RoundEntity> = _recordPendingRound
+    var recordPendingRound: LiveData<RoundEntity> = _recordPendingRound
 
     private val _recordRates = MutableLiveData<List<Rate>>()
-    var recordRates:LiveData<List<Rate>> = _recordRates
+    var recordRates: LiveData<List<Rate>> = _recordRates
 
     private val _recordLeaders = MutableLiveData<List<Leader>>()
-    var recordLeaders:LiveData<List<Leader>> = _recordLeaders
+    var recordLeaders: LiveData<List<Leader>> = _recordLeaders
 
     private val _recordNewRound = MutableLiveData<Long>()
-    var recordNewRound:LiveData<Long> = _recordNewRound
+    var recordNewRound: LiveData<Long> = _recordNewRound
 
-    private val _recordOperations = MutableLiveData<List<OperationEntity>>()
-    var recordOperations:LiveData<List<OperationEntity>> = _recordOperations
+    private val _recordOperations = MutableLiveData<List<LevelEntity>>()
+    var recordOperations: LiveData<List<LevelEntity>> = _recordOperations
 
+    private val smartRepository: SmartRepository = getKoin().get()
 
-    private val smartRepository: SmartRepository by inject()
-
-    fun addUser(strName:String) {
+    fun addUser(strName: String) {
         smartRepository.addUser(strName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -83,7 +83,7 @@ class SmartViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-    fun insertOperation(op: OperationEntity) {
+    fun insertOperation(op: LevelEntity) {
         smartRepository.insertOperation(op)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -107,7 +107,7 @@ class SmartViewModel(application: Application) : AndroidViewModel(application) {
 //            }
 //    }
 
-    fun getListRoundsWithNames(userId:Int) {
+    fun getListRoundsWithNames(userId: Int) {
         smartRepository.getListRoundsWithNames(userId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -119,7 +119,7 @@ class SmartViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-    fun getPendingRound(userId:Int, operationId:Int) {
+    fun getPendingRound(userId: Int, operationId: Int) {
         smartRepository.getPendingRound(userId, operationId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -131,7 +131,7 @@ class SmartViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-    fun getRates(userId:Int) {
+    fun getRates(userId: Int) {
         smartRepository.getRates(userId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -167,7 +167,6 @@ class SmartViewModel(application: Application) : AndroidViewModel(application) {
                 compositeDisposable.add(it)
             }
     }
-
 
 
     override fun onCleared() {

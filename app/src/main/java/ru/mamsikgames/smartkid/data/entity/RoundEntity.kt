@@ -10,7 +10,7 @@ data class RoundEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
     var userId: Int = 0,
-    var operationId: Int? = 0,
+    var levelId: Int? = 0,
     var roundBegin: Long = 0L,
     var roundEnd: Long = 0L,
     var finished: Boolean = false,

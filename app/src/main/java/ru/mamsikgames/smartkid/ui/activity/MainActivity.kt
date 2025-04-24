@@ -5,14 +5,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import java.io.Serializable
-import ru.mamsikgames.smartkid.data.entity.OperationEntity
-import ru.mamsikgames.smartkid.AdapterOperations
+import ru.mamsikgames.smartkid.data.entity.LevelEntity
+import ru.mamsikgames.smartkid.AdapterLevels
 import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
+import ru.mamsikgames.smartkid.domain.SmartRepository
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
+import kotlin.getValue
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private var currentUser = UserEntity(0, "",  true)
+
+    private val smartRepository: SmartRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +51,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 //main recycler
-        val adapterOperations = AdapterOperations()
+
+
+
+        val adapterOperations = AdapterLevels()
         binding.recyclerOperations.adapter = adapterOperations
 
         viewModel.getListOperations()
@@ -56,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        adapterOperations.onClick = { oper: OperationEntity ->
+        adapterOperations.onClick = { oper: LevelEntity ->
             gameSounds.playSoundPlay()
 
             val intent = Intent(this, GameActivity::class.java)

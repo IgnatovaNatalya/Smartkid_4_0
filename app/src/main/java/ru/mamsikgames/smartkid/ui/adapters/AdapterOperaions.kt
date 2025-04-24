@@ -8,12 +8,12 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import ru.mamsikgames.smartkid.data.entity.OperationEntity
+import ru.mamsikgames.smartkid.data.entity.LevelEntity
 
-class AdapterOperations : RecyclerView.Adapter<AdapterOperations.MainMenuViewHolder>() {
+class AdapterLevels : RecyclerView.Adapter<AdapterLevels.MainMenuViewHolder>() {
 
-    private var operationsList = mutableListOf<OperationEntity>()
-    lateinit var onClick: ((OperationEntity) -> Unit)
+    private var levelsList = mutableListOf<LevelEntity>()
+    lateinit var onClick: ((LevelEntity) -> Unit)
 
     inner class MainMenuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvLevelName: TextView = itemView.findViewById(R.id.TextView_Level_name)
@@ -22,22 +22,22 @@ class AdapterOperations : RecyclerView.Adapter<AdapterOperations.MainMenuViewHol
         private var llLevelGroup: ConstraintLayout = itemView.findViewById(R.id.ll_levelGroup)
         private var tvLevelGroup: TextView = itemView.findViewById(R.id.TextView_levelGroup)
 
-        fun bind(oper: OperationEntity, sameGroup: Boolean) {
+        fun bind(lvl: LevelEntity, sameGroup: Boolean) {
 
-            tvLevelName.text = oper.name
-            tvLevel.text = oper.codeName
+            tvLevelName.text = lvl.name
+            tvLevel.text = lvl.codeName
 
-            tvLevelName.setOnClickListener { onClick.invoke(oper) }
-            ivButton.setOnClickListener { onClick.invoke(oper) }
+            tvLevelName.setOnClickListener { onClick.invoke(lvl) }
+            ivButton.setOnClickListener { onClick.invoke(lvl) }
 
-            fun showGroup(show: Boolean, str: String?) {
-                if (show) {
-                    llLevelGroup.isVisible = true
-                    tvLevelGroup.text = str
-                } else
-                    llLevelGroup.isVisible = false
-            }
-            showGroup(!sameGroup, oper.groupName)
+//            fun showGroup(show: Boolean, levelGroup: Int?) {
+//                if (show) {
+//                    llLevelGroup.isVisible = true
+//                    tvLevelGroup.text = levelGroup
+//                } else
+//                    llLevelGroup.isVisible = false
+//            }
+            //showGroup(!sameGroup, lvl.levelGroup)
         }
     }
 
@@ -50,16 +50,16 @@ class AdapterOperations : RecyclerView.Adapter<AdapterOperations.MainMenuViewHol
     override fun onBindViewHolder(holder: MainMenuViewHolder, position: Int) {
         var sameGroup = false
         if (position > 0) sameGroup =
-            operationsList[position - 1].operation == operationsList[position].operation
-        holder.bind(operationsList[position], sameGroup)
+            levelsList[position - 1].operation == levelsList[position].operation
+        holder.bind(levelsList[position], sameGroup)
     }
 
-    fun setList(list: List<OperationEntity>) {
-        operationsList.clear()
-        operationsList.addAll(list)
+    fun setList(list: List<LevelEntity>) {
+        levelsList.clear()
+        levelsList.addAll(list)
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = operationsList.size
+    override fun getItemCount() = levelsList.size
 
 }
