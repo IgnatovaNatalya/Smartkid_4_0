@@ -18,4 +18,5 @@
     <string name="refresh">refresh</string>
     <string name="back">back</string>
     <string name="confirm_end_round">Закончить раунд?</string>
+    <string name="solve">РЕШАТЬ</string>
 </resources>

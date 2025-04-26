@@ -29,4 +29,11 @@
 
     <color name="letter_shadow_transparent">#6e676260</color>
 
+    <color name="a4_transparent_white">#55ffffff</color>
+    <color name="a4_cian">#00FFFF</color>
+    <color name="a4_blue">#00BFFF</color>
+    <color name="a4_black">#000000</color>
+    <color name="a4_salad_green">#B2EB31</color>
+    <color name="a4_grass_green">#7EA623</color>
+
 </resources>

@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="a4_level_text_style">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="a4_levelgroup_text_style">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="a4_level_codename_style">
+        <item name="fontFamily">@font/roboto_black</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="a4_level_title_style">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/a4_black</item>
+    </style>
+
+    <style name="a4_level_button_style">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+
     <style name="LevelTextStyle">
         <item name="fontFamily">@font/rubik_medium</item>
         <item name="android:textSize">15sp</item>

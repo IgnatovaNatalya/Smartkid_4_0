@@ -6,14 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.mamsikgames.smartkid.core.GameSounds
-import ru.mamsikgames.smartkid.data.entity.UserEntity
-import java.io.Serializable
-import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.AdapterLevels
+import ru.mamsikgames.smartkid.core.GameSounds
+import ru.mamsikgames.smartkid.data.entity.LevelEntity
+import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
-import kotlin.getValue
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 

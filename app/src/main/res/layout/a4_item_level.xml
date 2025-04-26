@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:background="@drawable/a4_backgroung_gradient">
+
+    <TextView
+        android:id="@+id/section_header"
+        style="@style/a4_level_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Сложение" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="160dp"
+        android:layout_height="220dp"
+        android:background="@drawable/a4_bg_level_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/section_header">
+
+        <TextView
+            android:id="@+id/codename"
+            style="@style/a4_level_codename_style"
+            android:layout_width="96dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="34dp"
+            android:background="@drawable/a4_bg_level_codename"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="C-1" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/a4_level_title_style"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/codename"
+            tools:text="Простое\nсложение" />
+
+        <TextView
+            style="@style/a4_level_button_style"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_level_button"
+            android:gravity="center"
+            android:text="@string/solve"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
