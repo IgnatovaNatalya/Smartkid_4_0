@@ -7,9 +7,9 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="a4_levelgroup_text_style">
+    <style name="a4_level_group_text_style">
         <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

@@ -13,6 +13,7 @@ import ru.mamsikgames.smartkid.domain.model.Leader
 import ru.mamsikgames.smartkid.domain.model.Rate
 import ru.mamsikgames.smartkid.domain.model.RoundWithName
 import ru.mamsikgames.smartkid.data.entity.LevelEntity
+import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 
@@ -66,15 +67,20 @@ interface SmartDao {
 
 //level
     @Query("SELECT * FROM Level ORDER BY ord")
-    fun getListOperations(): Flowable<List<LevelEntity>>
+    fun getListLevels(): Flowable<List<LevelEntity>>
 
 
     @Query("SELECT COUNT(id) FROM Level")
-    fun getCountOperations(): Flowable<Int>
+    fun getCountLevels(): Flowable<Int>
 
     @Query("SELECT * FROM Level WHERE id =:id")
-    fun getOperation(id:Int): Single<LevelEntity>
+    fun getLevel(id:Int): Single<LevelEntity>
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     fun insertLevel(op: LevelEntity): Completable
+
+//level group
+
+    @Query("SELECT * FROM LevelGroup")
+    fun getListLevelGroups(): Flowable<List<LevelGroupEntity>>
 }

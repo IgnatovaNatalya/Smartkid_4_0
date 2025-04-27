@@ -3,6 +3,8 @@ package ru.mamsikgames.smartkid.di
 import androidx.room.Room
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import ru.mamsikgames.smartkid.core.GameSounds
+import ru.mamsikgames.smartkid.core.ThinkManager
 import ru.mamsikgames.smartkid.data.db.SmartDb
 import ru.mamsikgames.smartkid.data.repository.SmartRepositoryImpl
 import ru.mamsikgames.smartkid.domain.impl.ChooseLevelInteractorImpl
@@ -23,6 +25,8 @@ val DatabaseModule = module {
 
 val repositoryModule = module {
     single<SmartRepositoryImpl> { SmartRepositoryImpl(get()) }
+    single { ThinkManager }
+    single { GameSounds }
 }
 
 val interactorModule = module {

@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import ru.mamsikgames.smartkid.data.entity.LevelEntity
+import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.model.Leader
@@ -29,10 +30,11 @@ interface SmartRepository {
 
     fun getLeaders(): Flowable<List<Leader>>
 
-    fun getListOperations(): Flowable<List<LevelEntity>>
-    fun getOperation(operationId:Int): Single<LevelEntity>
-    fun getCountOperations(): Flowable<Int>
-    fun insertOperation(op: LevelEntity) : Completable
+    fun getListLevels(): Flowable<List<LevelEntity>>
+    fun getLevel(operationId:Int): Single<LevelEntity>
+    fun getCountLevels(): Flowable<Int>
+    fun insertLevel(op: LevelEntity) : Completable
 
+    fun getListLevelGroups(): Flowable<List<LevelGroupEntity>>
 
 }

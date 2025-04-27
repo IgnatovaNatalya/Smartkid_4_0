@@ -1,5 +1,7 @@
 package ru.mamsikgames.smartkid.ui.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -8,6 +10,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.core.ThinkManager
@@ -16,7 +19,6 @@ import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import java.lang.System.currentTimeMillis
 import ru.mamsikgames.smartkid.R
 import ru.mamsikgames.smartkid.databinding.ActivityGameBinding
-import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
 import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
 import kotlin.getValue
 
@@ -24,13 +26,13 @@ import kotlin.getValue
 class GameActivity : AppCompatActivity() {
     private var inputNum: Int =0
 
-    private lateinit var thinkManager: ThinkManager
-    private lateinit var level: LevelEntity
-
+    private val thinkManager: ThinkManager by inject()
+    private val gameSounds:  GameSounds  by inject()
     private val viewModel: GameViewModel  by viewModel()
+
     private lateinit var binding: ActivityGameBinding
 
-    private var gameSounds = GameSounds
+    private lateinit var level: LevelEntity
 
     private var currentUserId = 1
     private var currentUserName = ""
@@ -65,19 +67,9 @@ class GameActivity : AppCompatActivity() {
         if (level.id != null) levelId = level.id!!
 
         currentUserId = intent.getIntExtra(EXTRA_USER_ID,0)
-        currentUserName = intent.getStringExtra(EXTRA_USER_NAME).toString()
 
         round.levelId = levelId
         round.userId = currentUserId
-
-        thinkManager = ThinkManager
-
-
-        //val tvUserName = findViewById<TextView>(R.id.textView_Game_userName)
-        binding.textViewGameUserName.text = currentUserName
-
-        //val tvLevelName = findViewById<TextView>(R.id.textView_Game_levelName)
-        binding.textViewGameLevelName.text = level.codeName
 
         setListeners()
 
@@ -284,9 +276,16 @@ class GameActivity : AppCompatActivity() {
         binding.button00.setOnClickListener { pressNum(0) }
     }
 
-    companion object { //повторяются
+    companion object {
         const val EXTRA_LEVEL = "EXTRA_OPERATION_PARAMS"
         const val EXTRA_USER_ID = "EXTRA_USER_ID"
-        const val EXTRA_USER_NAME = "EXTRA_USER_NAME"
+
+        fun newInstance(context: Context, level: LevelEntity, userId:Int): Intent {
+            return Intent(context, GameActivity::class.java).apply {
+                putExtra(EXTRA_LEVEL, level)
+                putExtra(EXTRA_USER_ID,userId)
+            }
+        }
     }
+
 }

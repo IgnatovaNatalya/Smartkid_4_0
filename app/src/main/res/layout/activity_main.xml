@@ -6,28 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
+    android:background="@drawable/a4_choose_level_background"
     tools:context=".ui.activity.MainActivity">
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-        <ImageView
-            android:id="@+id/imageView_backWinter"
-            android:foregroundGravity="center"
-            android:importantForAccessibility="no"
-            android:layout_width="match_parent"
-            app:srcCompat="@drawable/a4_backgroung_gradient"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_level_groups"
         android:layout_width="match_parent"
-        android:layout_height="22dp"
+        android:layout_height="36dp"
         android:layout_marginTop="158dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,9 +34,8 @@
         android:id="@+id/recycler_levels"
         android:orientation="vertical"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         android:layout_width="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginHorizontal="12dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_bar"
         app:layout_constraintStart_toStartOf="parent"

@@ -19,4 +19,6 @@
     <string name="back">back</string>
     <string name="confirm_end_round">Закончить раунд?</string>
     <string name="solve">РЕШАТЬ</string>
+    <string name="stat">Статистика</string>
+    <string name="profile">Профиль</string>
 </resources>

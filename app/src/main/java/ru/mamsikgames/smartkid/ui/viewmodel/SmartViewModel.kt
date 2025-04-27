@@ -6,7 +6,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.mamsikgames.smartkid.data.entity.LevelEntity
-import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.SmartRepository
 import ru.mamsikgames.smartkid.domain.model.Leader
@@ -59,7 +58,7 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
 
 
     fun insertOperation(op: LevelEntity) {
-        smartRepository.insertOperation(op)
+        smartRepository.insertLevel(op)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
