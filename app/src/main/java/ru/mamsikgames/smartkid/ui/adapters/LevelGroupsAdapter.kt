@@ -11,6 +11,7 @@ class LevelGroupsAdapter(private val clickGroupListener: AdapterClickListener) :
     RecyclerView.Adapter<LevelGroupViewHolder>() {
 
     private var levelGroupsList = listOf<LevelGroupEntity>()
+    private var selected: LevelGroupViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LevelGroupViewHolder {
         val layoutInspector = LayoutInflater.from(parent.context)
@@ -21,11 +22,16 @@ class LevelGroupsAdapter(private val clickGroupListener: AdapterClickListener) :
         holder.bind(levelGroupsList[position])
         holder.itemView.setOnClickListener {
             clickGroupListener.onLevelGroupClick(position)
-            holder.selectItem()
+            selected?.unselectItem()
+            selected = holder.selectItem()
         }
 
         if (position == levelGroupsList.size - 1) holder.setPaddingRight()
-        if (position == 0) holder.setPaddingLeft()
+
+        if (position == 0) {
+            holder.setPaddingLeft()
+            selected = holder.selectItem()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -38,6 +44,5 @@ class LevelGroupsAdapter(private val clickGroupListener: AdapterClickListener) :
 
     fun interface AdapterClickListener {
         fun onLevelGroupClick(position: Int)
-
     }
 }

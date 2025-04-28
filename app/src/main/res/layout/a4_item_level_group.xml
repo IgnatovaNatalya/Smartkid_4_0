@@ -6,8 +6,9 @@
     android:id="@+id/level_group_name"
     style="@style/a4_level_group_text_style"
     android:layout_width="wrap_content"
-    android:layout_height="36dp"
-    android:paddingHorizontal="8dp"
+    android:layout_height="32dp"
+    android:paddingHorizontal="24dp"
+    android:gravity="center"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     tools:text="Сложение" />
