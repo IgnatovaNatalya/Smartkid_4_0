@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import ru.mamsikgames.smartkid.R
 import ru.mamsikgames.smartkid.core.GameSounds
-import ru.mamsikgames.smartkid.ui.TextViewOutline
+import ru.mamsikgames.smartkid.ui.util.TextViewOutline
 import ru.mamsikgames.smartkid.ui.viewmodel.SmartViewModel
 import ru.mamsikgames.smartkid.ui.adapters.AdapterStat
 

@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="@id/imageView_transparent"
         app:layout_constraintEnd_toEndOf="@id/imageView_transparent"/>
 
-    <ru.mamsikgames.smartkid.ui.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.util.TextViewOutline
         android:id="@+id/textView_Ok"
         style="@style/OutlinedButtonStyle2"
         android:textSize="24sp"
@@ -95,7 +95,7 @@
                 android:layout_gravity="center"
                 android:text="@string/level" />
 
-            <ru.mamsikgames.smartkid.ui.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                 android:id="@+id/textView_Results_Level"
                 style="@style/OutlinedTextStyleLevels"
                 android:layout_width="300dp"
@@ -113,7 +113,7 @@
                 android:layout_marginTop="17dp"
                 android:text="Задач" />
 
-            <ru.mamsikgames.smartkid.ui.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                 android:id="@+id/textView_Results_NumCorrect"
                 style="@style/OutlinedTextStyleLevels"
                 android:layout_width="300dp"
@@ -141,7 +141,7 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <ru.mamsikgames.smartkid.ui.TextViewOutline
+                <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                     android:id="@+id/textView_Results_Success"
                     style="@style/OutlinedTextStyle"
                     android:layout_width="60dp"
@@ -150,7 +150,7 @@
                     android:textSize="30sp"
                     tools:text="50" />
 
-                <ru.mamsikgames.smartkid.ui.TextViewOutline
+                <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                     style="@style/OutlinedTextStyle"
                     android:layout_width="25dp"
                     android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                     android:text="/"
                     android:textSize="30sp" />
 
-                <ru.mamsikgames.smartkid.ui.TextViewOutline
+                <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                     android:id="@+id/textView_Results_Fails"
                     style="@style/OutlinedTextStyle"
                     android:layout_width="60dp"
@@ -168,7 +168,7 @@
                     android:textSize="30sp"
                     tools:text="30" />
 
-                <ru.mamsikgames.smartkid.ui.TextViewOutline
+                <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                     style="@style/OutlinedTextStyle"
                     android:layout_width="25dp"
                     android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                     android:text="/"
                     android:textSize="30sp" />
 
-                <ru.mamsikgames.smartkid.ui.TextViewOutline
+                <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                     android:id="@+id/textView_Results_Tries"
                     style="@style/OutlinedTextStyle"
                     android:layout_width="60dp"
@@ -196,7 +196,7 @@
                 android:layout_marginTop="17dp"
                 android:text="Ошибок" />
 
-            <ru.mamsikgames.smartkid.ui.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                 android:id="@+id/textView_Results_NumWrong"
                 style="@style/OutlinedTextStyleLevels"
                 android:layout_width="300dp"
@@ -260,7 +260,7 @@
 
             </LinearLayout>
 
-            <ru.mamsikgames.smartkid.ui.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                 android:id="@+id/textView_Results_Duration"
                 style="@style/OutlinedTextStyleRubik_active"
                 android:layout_width="300dp"
@@ -278,7 +278,7 @@
                 android:layout_marginTop="15dp"
                 android:text="Выходов" />
 
-            <ru.mamsikgames.smartkid.ui.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                 android:id="@+id/textView_Results_Exits"
                 style="@style/OutlinedTextStyleLevels"
                 android:layout_width="300dp"

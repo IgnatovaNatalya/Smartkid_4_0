@@ -21,7 +21,7 @@
             app:srcCompat="@drawable/back_winter" />
     </LinearLayout>
 
-    <ru.mamsikgames.smartkid.ui.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.util.TextViewOutline
         android:id="@+id/textView_StatTitle"
         style="@style/TitleStyle2"
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textView_Stat_userName"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ru.mamsikgames.smartkid.ui.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.util.TextViewOutline
         android:id="@+id/textView_Stat_userName"
         style="@style/PlayerStyle"
         android:layout_width="match_parent"

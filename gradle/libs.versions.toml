@@ -12,9 +12,10 @@ constraintlayout = "2.2.1"
 retrofit = "2.11.0"
 koin = "3.3.0"
 room = "2.7.0"
-ksp = "2.0.21-1.0.25" #1.9.0-1.0.13
+ksp = "2.0.21-1.0.25"
 rxandroid = "3.0.2"
 rxjava = "3.1.9"
+recycler = "1.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,7 @@ room-rxJava3 = { group = "androidx.room", name = "room-rxjava3", version.ref = "
 room-rxJava2 = { group = "androidx.room", name = "room-rxjava2", version.ref = "room" }
 rxjava3-rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
 rxjava3-rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava" }
+recycler = {module = "androidx.recyclerview:recyclerview", version.ref = "recycler"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

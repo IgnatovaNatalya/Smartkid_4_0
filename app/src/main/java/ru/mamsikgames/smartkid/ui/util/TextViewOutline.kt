@@ -1,4 +1,4 @@
-package ru.mamsikgames.smartkid.ui
+package ru.mamsikgames.smartkid.ui.util
 
 import android.content.Context
 import android.graphics.*

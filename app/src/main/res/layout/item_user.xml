@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
 
-    <ru.mamsikgames.smartkid.ui.TextViewOutline
+    <ru.mamsikgames.smartkid.ui.util.TextViewOutline
         android:id="@+id/textView_userName"
         style="@style/OutlinedTextStyleRubik"
         android:layout_width="match_parent"

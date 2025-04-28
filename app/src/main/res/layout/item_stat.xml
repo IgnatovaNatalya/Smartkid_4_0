@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="уровень"/-->
 
-        <ru.mamsikgames.smartkid.ui.TextViewOutline
+        <ru.mamsikgames.smartkid.ui.util.TextViewOutline
             android:id="@+id/textView_Stat_Level"
             style="@style/OutlinedTextStyleRubik"
             android:textSize="36sp"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="left" >
-            <ru.mamsikgames.smartkid.ui.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                 android:id="@+id/textView_Stat_NumCorrect"
                 style="@style/OutlinedTextStyleRubik_active"
                 android:layout_width="68sp"
@@ -83,7 +83,7 @@
             android:orientation="horizontal"
             android:gravity="left">
 
-            <ru.mamsikgames.smartkid.ui.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                 android:id="@+id/textView_Stat_NumWrong"
                 style="@style/OutlinedTextStyleRubik_active"
                 android:textSize="20sp"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="left">
-            <ru.mamsikgames.smartkid.ui.TextViewOutline
+            <ru.mamsikgames.smartkid.ui.util.TextViewOutline
                 android:id="@+id/textView_Stat_NumExits"
                 style="@style/OutlinedTextStyleRubik_active"
                 android:textSize="20sp"

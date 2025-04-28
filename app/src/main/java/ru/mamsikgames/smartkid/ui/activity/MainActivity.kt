@@ -9,7 +9,7 @@ import ru.mamsikgames.smartkid.LevelsAdapter
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
 import ru.mamsikgames.smartkid.domain.model.LevelModel
-import ru.mamsikgames.smartkid.ui.CenterLayoutManager
+import ru.mamsikgames.smartkid.ui.util.CenterLayoutManager
 import ru.mamsikgames.smartkid.ui.adapters.LevelGroupsAdapter
 import ru.mamsikgames.smartkid.ui.util.LevelGroupAdaptersAssociator
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
@@ -79,7 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun clickGroup(groupPos: Int) {
         binding.recyclerLevelGroups.smoothScrollToPosition(groupPos)
-        binding.recyclerLevels.smoothScrollToPosition(getLevelPos(groupPos))
+        binding.recyclerLevels.smoothScrollToPosition(getLevelPos(groupPos)+1)
+
     }
 
     private fun getLevelPos(groupPos:Int) : Int{

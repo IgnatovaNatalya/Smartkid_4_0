@@ -7,7 +7,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
-import ru.mamsikgames.smartkid.ui.TextViewOutline
+import ru.mamsikgames.smartkid.ui.util.TextViewOutline
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 import ru.mamsikgames.smartkid.R

@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import ru.mamsikgames.smartkid.R
 import ru.mamsikgames.smartkid.domain.model.RoundWithName
-import ru.mamsikgames.smartkid.ui.TextViewOutline
+import ru.mamsikgames.smartkid.ui.util.TextViewOutline
 import java.text.SimpleDateFormat
 import java.util.*
 
