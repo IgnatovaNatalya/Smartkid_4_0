@@ -1,7 +1,9 @@
 package ru.mamsikgames.smartkid.ui.activity
 
 import android.os.Bundle
+import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.LevelsAdapter
@@ -16,7 +18,7 @@ import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
 class MainActivity : AppCompatActivity() {
 
     private var gameSounds = GameSounds
-    private val viewModel: ChooseLevelViewModel  by viewModel()
+    private val viewModel: ChooseLevelViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
     private val adapterLevels = LevelsAdapter { openLevel(it) }
     private val adapterLevelGroups = LevelGroupsAdapter { selectGroup(it) }
@@ -35,27 +37,31 @@ class MainActivity : AppCompatActivity() {
         viewModel.getCurrentUser()
         viewModel.currentUser.observe(this) {
             if (it != null) userId = it.userId //todo передавать только Id
-//                currentUser = it
-//                val str = " ${currentUser.userName} "
-//                binding.textViewPlayer.text = str
         }
 
+        //LEVELS
+
+        val manager = GridLayoutManager(this, 2) // MAX NUMBER OF SPACES
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == 1 || position == 6) {
+                    2
+                } else {
+                    1
+                }
+            }
+        }
         binding.recyclerLevels.adapter = adapterLevels
+        viewModel.listLevels.observe(this) { adapterLevels.setList(it) }
 
-        viewModel.listLevels.observe(this) {
-            adapterLevels.setList(it)
-        }
+        //LEVEL GROUPS
 
-        binding.recyclerLevelGroups.layoutManager = CenterLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerLevelGroups.layoutManager =
+            CenterLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
         binding.recyclerLevelGroups.adapter = adapterLevelGroups
 
-
-        viewModel.listLevelGroups.observe(this) {
-            adapterLevelGroups.setList(it)
-        }
-
-//        val snapHelperM: SnapHelper = PagerSnapHelper()
-//        snapHelperM.attachToRecyclerView(binding.recyclerLevelGroups)
+        viewModel.listLevelGroups.observe(this) { adapterLevelGroups.setList(it) }
     }
 
     private fun openLevel(lvl: LevelEntity) {
