@@ -1,17 +1,17 @@
 package ru.mamsikgames.smartkid.ui.activity
 
 import android.os.Bundle
-import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.LevelsAdapter
 import ru.mamsikgames.smartkid.core.GameSounds
-import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
+import ru.mamsikgames.smartkid.domain.model.LevelModel
 import ru.mamsikgames.smartkid.ui.CenterLayoutManager
 import ru.mamsikgames.smartkid.ui.adapters.LevelGroupsAdapter
+import ru.mamsikgames.smartkid.ui.util.LevelGroupAdaptersAssociator
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
 
 
@@ -20,8 +20,11 @@ class MainActivity : AppCompatActivity() {
     private var gameSounds = GameSounds
     private val viewModel: ChooseLevelViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
+
     private val adapterLevels = LevelsAdapter { openLevel(it) }
-    private val adapterLevelGroups = LevelGroupsAdapter { selectGroup(it) }
+    private val adapterLevelGroups = LevelGroupsAdapter { clickGroup(it) }
+
+    private var levelGroupsAdapterAssociator = listOf<LevelGroupAdaptersAssociator>()
 
     private var userId = 0
 
@@ -41,18 +44,16 @@ class MainActivity : AppCompatActivity() {
 
         //LEVELS
 
-        val manager = GridLayoutManager(this, 2) // MAX NUMBER OF SPACES
-        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+        val levelLayoutManager = GridLayoutManager(this, 2)
+
+        levelLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (position == 1 || position == 6) {
-                    2
-                } else {
-                    1
-                }
-            }
+                return if (position in getSectionHeaders() ) 2 else 1
+             }
         }
+        binding.recyclerLevels.layoutManager = levelLayoutManager
         binding.recyclerLevels.adapter = adapterLevels
-        viewModel.listLevels.observe(this) { adapterLevels.setList(it) }
+
 
         //LEVEL GROUPS
 
@@ -61,17 +62,39 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerLevelGroups.adapter = adapterLevelGroups
 
-        viewModel.listLevelGroups.observe(this) { adapterLevelGroups.setList(it) }
+
+        //Observe
+
+        viewModel.listLevels.observe(this) { adapterLevels.setList(it) }
+        viewModel.listLevelGroups.observe(this) { adapterLevelGroups.setList(it)}
+        viewModel.listLevelGroupAdaptersAssociator.observe(this) { levelGroupsAdapterAssociator = it}
+
     }
 
-    private fun openLevel(lvl: LevelEntity) {
+    private fun openLevel(level: LevelModel) {
         gameSounds.playSoundPlay()
-        val intent = GameActivity.newInstance(this, lvl, userId)
+        val intent = GameActivity.newInstance(this, level, userId)
         startActivity(intent)
     }
 
-    private fun selectGroup(pos: Int) {
-        binding.recyclerLevelGroups.smoothScrollToPosition(pos)
+    private fun clickGroup(groupPos: Int) {
+        binding.recyclerLevelGroups.smoothScrollToPosition(groupPos)
+        binding.recyclerLevels.smoothScrollToPosition(getLevelPos(groupPos))
+    }
+
+    private fun getLevelPos(groupPos:Int) : Int{
+        for (lga in levelGroupsAdapterAssociator) {
+            if (lga.groupAdapterPos == groupPos) return  lga.levelAdapterPos
+        }
+        return 0
+    }
+
+    private fun getSectionHeaders() : List<Int> {
+        val list = mutableListOf<Int>()
+        for (lga in levelGroupsAdapterAssociator) {
+            list.add(lga.levelAdapterPos)
+        }
+        return list
     }
 
 }

@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.databinding.A4ItemLevelGroupBinding
+import ru.mamsikgames.smartkid.domain.model.LevelGroupModel
 
 class LevelGroupsAdapter(private val clickGroupListener: AdapterClickListener) :
     RecyclerView.Adapter<LevelGroupViewHolder>() {
 
-    private var levelGroupsList = listOf<LevelGroupEntity>()
+    private var levelGroupsList = listOf<LevelGroupModel>()
     private var selected: LevelGroupViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LevelGroupViewHolder {
@@ -35,7 +35,7 @@ class LevelGroupsAdapter(private val clickGroupListener: AdapterClickListener) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<LevelGroupEntity>) {
+    fun setList(list: List<LevelGroupModel>) {
         levelGroupsList = list
         notifyDataSetChanged()
     }

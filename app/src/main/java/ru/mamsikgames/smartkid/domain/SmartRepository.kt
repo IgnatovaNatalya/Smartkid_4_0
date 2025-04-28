@@ -4,16 +4,16 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import ru.mamsikgames.smartkid.data.entity.LevelEntity
-import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.model.Leader
+import ru.mamsikgames.smartkid.domain.model.LevelModel
+import ru.mamsikgames.smartkid.domain.model.LevelParams
 import ru.mamsikgames.smartkid.domain.model.Rate
 import ru.mamsikgames.smartkid.domain.model.RoundWithName
 
 interface SmartRepository {
-    fun addUser(strName:String): Completable
+    //fun addUser(strName:String): Completable
     fun setCurrentUser(userId:Int) : Completable
 
     fun getListUsers(): Flowable<List<UserEntity>>
@@ -30,11 +30,11 @@ interface SmartRepository {
 
     fun getLeaders(): Flowable<List<Leader>>
 
-    fun getListLevels(): Flowable<List<LevelEntity>>
-    fun getLevel(operationId:Int): Single<LevelEntity>
+    fun getListLevelsAndGroups(): Flowable<List<LevelModel>>
+    fun getLevel(operationId:Int): Single<LevelParams>
     fun getCountLevels(): Flowable<Int>
-    fun insertLevel(op: LevelEntity) : Completable
+   //fun insertLevel(op: LevelEntity) : Completable
 
-    fun getListLevelGroups(): Flowable<List<LevelGroupEntity>>
+    //fun getListLevelGroups(): Flowable<List<LevelGroupEntity>>
 
 }

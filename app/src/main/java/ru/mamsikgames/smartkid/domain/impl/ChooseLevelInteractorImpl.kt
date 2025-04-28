@@ -6,6 +6,7 @@ import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.data.repository.SmartRepositoryImpl
 import ru.mamsikgames.smartkid.domain.interactor.ChooseLevelInteractor
+import ru.mamsikgames.smartkid.domain.model.LevelModel
 
 class ChooseLevelInteractorImpl(private val smartRepository: SmartRepositoryImpl) : ChooseLevelInteractor{
     override fun getCurrentUser(): Flowable<UserEntity> {
@@ -13,12 +14,8 @@ class ChooseLevelInteractorImpl(private val smartRepository: SmartRepositoryImpl
         return user
     }
 
-    override fun getListLevels(): Flowable<List<LevelEntity>> {
-        val listOperations = smartRepository.getListLevels()
-        return listOperations
+    override fun getListLevelsAndGroups(): Flowable<List<LevelModel>> {
+        return smartRepository.getListLevelsAndGroups()
     }
 
-    override fun getListLevelGroups(): Flowable<List<LevelGroupEntity>> {
-        return smartRepository.getListLevelGroups()
-    }
 }

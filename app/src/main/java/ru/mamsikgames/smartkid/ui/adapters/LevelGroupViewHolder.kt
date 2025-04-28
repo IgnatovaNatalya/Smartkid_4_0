@@ -2,15 +2,15 @@ package ru.mamsikgames.smartkid.ui.adapters
 
 import android.graphics.Typeface
 import androidx.recyclerview.widget.RecyclerView
-import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.databinding.A4ItemLevelGroupBinding
+import ru.mamsikgames.smartkid.domain.model.LevelGroupModel
 
 
 class LevelGroupViewHolder(private val binding: A4ItemLevelGroupBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(levelGroup: LevelGroupEntity) {
-        binding.levelGroupName.text = levelGroup.name
+    fun bind(levelGroup: LevelGroupModel) {
+        binding.levelGroupName.text = levelGroup.groupName
     }
 
     fun setPaddingRight() {

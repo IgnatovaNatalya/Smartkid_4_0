@@ -44,42 +44,21 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
 
     private val smartRepository: SmartRepository = getKoin().get()
 
-    fun addUser(strName: String) {
-        smartRepository.addUser(strName)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-
-            }, {
-            }).let {
-                compositeDisposable.add(it)
-            }
-    }
-
-
-    fun insertOperation(op: LevelEntity) {
-        smartRepository.insertLevel(op)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                //_recordOperations.postValue(it)
-            }, {
-            }).let {
-                compositeDisposable.add(it)
-            }
-    }
-
-//    fun setCurrentUser(userId:Int) {
-//        smartRepository.setCurrentUser(userId)
+//    fun addUser(strName: String) {
+//        smartRepository.addUser(strName)
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
 //            .subscribe({
-//                getCurrentUser()
+//
 //            }, {
 //            }).let {
 //                compositeDisposable.add(it)
 //            }
-//    }
+//    } todo вернуть добавление пользователя
+
+
+
+
 
     fun getListRoundsWithNames(userId: Int) {
         smartRepository.getListRoundsWithNames(userId)

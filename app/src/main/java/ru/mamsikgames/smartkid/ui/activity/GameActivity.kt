@@ -19,6 +19,7 @@ import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import java.lang.System.currentTimeMillis
 import ru.mamsikgames.smartkid.R
 import ru.mamsikgames.smartkid.databinding.ActivityGameBinding
+import ru.mamsikgames.smartkid.domain.model.LevelModel
 import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
 import kotlin.getValue
 
@@ -62,8 +63,8 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide() ///
 
-        if (!intent.hasExtra(EXTRA_LEVEL)) finish()
-        level = intent.extras?.get(EXTRA_LEVEL) as LevelEntity
+        if (!intent.hasExtra(EXTRA_LEVEL_ID)) finish()
+        level = intent.extras?.get(EXTRA_LEVEL_ID) as LevelEntity
         if (level.id != null) levelId = level.id!!
 
         currentUserId = intent.getIntExtra(EXTRA_USER_ID,0)
@@ -277,12 +278,12 @@ class GameActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_LEVEL = "EXTRA_OPERATION_PARAMS"
+        const val EXTRA_LEVEL_ID = "EXTRA_LEVEL_ID"
         const val EXTRA_USER_ID = "EXTRA_USER_ID"
 
-        fun newInstance(context: Context, level: LevelEntity, userId:Int): Intent {
+        fun newInstance(context: Context, level: LevelModel, userId: Int): Intent {
             return Intent(context, GameActivity::class.java).apply {
-                putExtra(EXTRA_LEVEL, level)
+                putExtra(EXTRA_LEVEL_ID, level.id)
                 putExtra(EXTRA_USER_ID,userId)
             }
         }

@@ -8,17 +8,15 @@ import ru.mamsikgames.smartkid.domain.model.Leader
 import ru.mamsikgames.smartkid.domain.model.Rate
 import ru.mamsikgames.smartkid.domain.model.RoundWithName
 import ru.mamsikgames.smartkid.data.dao.SmartDao
-import ru.mamsikgames.smartkid.data.entity.LevelEntity
+import ru.mamsikgames.smartkid.domain.model.LevelParams
 import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.SmartRepository
+import ru.mamsikgames.smartkid.domain.model.LevelModel
 
 class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
 
-    override fun addUser(strName: String): Completable {
-        return smartDao.addUser(strName)
-    }
 
     override fun insertRound(r: RoundEntity): Single<Long> {
         return smartDao.insertRound(r)
@@ -28,9 +26,6 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
         return smartDao.updateRound(r)
     }
 
-    override fun insertLevel(op: LevelEntity): Completable {
-        return smartDao.insertLevel(op)
-    }
 
     override fun setCurrentUser(userId: Int): Completable {
         return smartDao.setCurrentUser(userId)
@@ -64,19 +59,16 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
         return smartDao.getCurrentUser()
     }
 
-    override fun getListLevels(): Flowable<List<LevelEntity>> {
-        return smartDao.getListLevels()
+    override fun getListLevelsAndGroups(): Flowable<List<LevelModel>> {
+        return smartDao.getListLevelsAndGroups()
     }
 
     override fun getCountLevels(): Flowable<Int> {
         return smartDao.getCountLevels()
     }
 
-    override fun getLevel(operationId: Int): Single<LevelEntity> {
+    override fun getLevel(operationId: Int): Single<LevelParams> {
         return smartDao.getLevel(operationId)
     }
 
-    override fun getListLevelGroups(): Flowable<List<LevelGroupEntity>> {
-        return smartDao.getListLevelGroups()
-    }
 }

@@ -34,7 +34,7 @@
         android:id="@+id/recycler_levels"
         android:orientation="vertical"
         android:layout_height="0dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginHorizontal="12dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_bar"
