@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         gameSounds.initSounds(this)
 
         viewModel.getCurrentUser()
-        viewModel.currentUser.observe(this) {
-            if (it != null) userId = it.userId //todo передавать только Id
+        viewModel.currentUserId.observe(this) {
+            if (it != null) userId = it
         }
 
         //LEVELS

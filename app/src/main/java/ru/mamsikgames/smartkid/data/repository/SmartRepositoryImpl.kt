@@ -9,7 +9,6 @@ import ru.mamsikgames.smartkid.domain.model.Rate
 import ru.mamsikgames.smartkid.domain.model.RoundWithName
 import ru.mamsikgames.smartkid.data.dao.SmartDao
 import ru.mamsikgames.smartkid.domain.model.LevelParams
-import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.SmartRepository
@@ -67,8 +66,8 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
         return smartDao.getCountLevels()
     }
 
-    override fun getLevel(operationId: Int): Single<LevelParams> {
-        return smartDao.getLevel(operationId)
+    override fun getLevelParams(levelId: Int): Single<LevelParams> {
+        return smartDao.getLevelParams(levelId)
     }
 
 }

@@ -76,7 +76,7 @@ interface SmartDao {
     fun getCountLevels(): Flowable<Int>
 
     @Query("SELECT * FROM Level WHERE id =:id")
-    fun getLevel(id:Int): Single<LevelParams>
+    fun getLevelParams(id:Int): Single<LevelParams>
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     fun insertLevel(op: LevelEntity): Completable

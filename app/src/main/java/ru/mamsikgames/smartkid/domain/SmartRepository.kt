@@ -31,7 +31,7 @@ interface SmartRepository {
     fun getLeaders(): Flowable<List<Leader>>
 
     fun getListLevelsAndGroups(): Flowable<List<LevelModel>>
-    fun getLevel(operationId:Int): Single<LevelParams>
+    fun getLevelParams(operationId:Int): Single<LevelParams>
     fun getCountLevels(): Flowable<Int>
    //fun insertLevel(op: LevelEntity) : Completable
 

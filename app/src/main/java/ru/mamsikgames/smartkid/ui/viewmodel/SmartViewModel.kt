@@ -113,7 +113,6 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
 
     override fun onCleared() {
         compositeDisposable.dispose()
-        compositeDisposable.clear()
         super.onCleared()
     }
 }

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.mamsikgames.smartkid.data.entity.UserEntity
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import ru.mamsikgames.smartkid.domain.interactor.ChooseLevelInteractor
@@ -16,8 +15,8 @@ class ChooseLevelViewModel(private val chooseLevelInteractor: ChooseLevelInterac
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val _currentUser = MutableLiveData<UserEntity>()
-    var currentUser: LiveData<UserEntity> = _currentUser
+    private val _currentUserId = MutableLiveData<Int>()
+    var currentUserId: LiveData<Int> = _currentUserId
 
     private val _listLevels = MutableLiveData<List<LevelModel>>()
     var listLevels: LiveData<List<LevelModel>> = _listLevels
@@ -30,7 +29,6 @@ class ChooseLevelViewModel(private val chooseLevelInteractor: ChooseLevelInterac
 
     init {
         getListLevelsAndGroups()
-        //getListLevelGroups()
     }
 
     fun getCurrentUser() {
@@ -38,7 +36,7 @@ class ChooseLevelViewModel(private val chooseLevelInteractor: ChooseLevelInterac
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                _currentUser.postValue(it)
+                _currentUserId.postValue(it.userId)
             }, {
             }).let {
                 compositeDisposable.add(it)
@@ -90,7 +88,6 @@ class ChooseLevelViewModel(private val chooseLevelInteractor: ChooseLevelInterac
 
     override fun onCleared() {
         compositeDisposable.dispose()
-        compositeDisposable.clear()
         super.onCleared()
     }
 }

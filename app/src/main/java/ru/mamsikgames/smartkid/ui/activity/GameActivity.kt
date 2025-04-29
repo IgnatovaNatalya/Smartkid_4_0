@@ -19,7 +19,6 @@ import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import java.lang.System.currentTimeMillis
 import ru.mamsikgames.smartkid.R
 import ru.mamsikgames.smartkid.databinding.ActivityGameBinding
-import ru.mamsikgames.smartkid.domain.model.LevelModel
 import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
 import kotlin.getValue
 
@@ -35,15 +34,14 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var level: LevelEntity
 
-    private var currentUserId = 1
-    private var currentUserName = ""
+    private var userId = 1
     private  var levelId:Int =0
 
     private var state = false
 
     private var round = RoundEntity(
         null,
-        currentUserId,
+        userId,
         0,
         currentTimeMillis() ,
         0L,
@@ -55,7 +53,6 @@ class GameActivity : AppCompatActivity() {
         0
     )
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -64,37 +61,34 @@ class GameActivity : AppCompatActivity() {
         supportActionBar?.hide() ///
 
         if (!intent.hasExtra(EXTRA_LEVEL_ID)) finish()
-        level = intent.extras?.get(EXTRA_LEVEL_ID) as LevelEntity
-        if (level.id != null) levelId = level.id!!
-
-        currentUserId = intent.getIntExtra(EXTRA_USER_ID,0)
+        levelId = intent.getIntExtra(EXTRA_LEVEL_ID,0)
+        val levelCodeName = intent.getStringExtra(EXTRA_LEVEL_CODENAME)
+        userId = intent.getIntExtra(EXTRA_USER_ID,0)
 
         round.levelId = levelId
-        round.userId = currentUserId
+        round.userId = userId
 
         setListeners()
 
-        val tvRound = findViewById<TextView>(R.id.textView_Game_Round)
 
         //get pending round
-        viewModel.getPendingRound(currentUserId,levelId)
-        viewModel.recordPendingRound.observe(this) {
+        viewModel.getPendingRound(userId,levelId)
+        viewModel.pendingRound.observe(this) {
             if (it!=null) {
                 round =  it
-                tvRound.text = it.id.toString()
                 setCorrect(round.numCorrect)
                 setWrong(round.numWrong)
             }
         }
 
     //if created new round get id
-        viewModel.recordNewRound.observe(this) {
+        viewModel.newRoundId.observe(this) {
             if (it!=null) round.id =  it.toLong()
-            tvRound.text = it.toString()
+            binding.textViewGameRound.text = it.toString()
         }
 
     //create & print task
-        if (!thinkManager.getTask(levelId))
+        if (!thinkManager.getTask(levelId)) //todo во viewmodel отправить
             newTask()
 
         printTask(null)
@@ -102,46 +96,17 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun finishAndSave() {
-        val dialogFinishRound = DialogFinishRound(this, R.style.dialog_style)
-
-        dialogFinishRound.onClickButton = {
-            gameSounds.playSoundPlay()
-            round.roundEnd = currentTimeMillis()
-            round.duration = round.roundEnd - round.roundBegin
-
-            round.finished = true
-            this.updateRound()
-            dialogFinishRound.dismiss()
-            //showResult()
-        }
-
-        dialogFinishRound.onClickCancel ={
-            gameSounds.playSoundErase()
-            dialogFinishRound.dismiss()
-        }
-
-        gameSounds.playSoundRestart()
-        dialogFinishRound.show()
+        gameSounds.playSoundPlay()
+        round.roundEnd = currentTimeMillis()
+        round.duration = round.roundEnd - round.roundBegin
+        round.finished = true
+        viewModel.updateRound(round)
     }
 
 
     private fun newTask() {
-        //val str =
-        thinkManager.newTask(LevelEntity(
-            level.id,
-            level.name,
-            level.codeName,
-            level.op1Min,
-            level.op1Max,
-            level.op2Min,
-            level.op2Max,
-            level.resMin,
-            level.resMax,
-            level.operation,
-            level.equation,
-            level.relationOp1,
-            level.relationOp2))
-
+        //thinkManager.newTask(levelParams)
+        viewModel.newTask(level) // todo перенести
         round.numTasks++
     }
 
@@ -279,11 +244,13 @@ class GameActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_LEVEL_ID = "EXTRA_LEVEL_ID"
+        const val EXTRA_LEVEL_CODENAME = "EXTRA_LEVEL_CODENAME"
         const val EXTRA_USER_ID = "EXTRA_USER_ID"
 
-        fun newInstance(context: Context, level: LevelModel, userId: Int): Intent {
+        fun newInstance(context: Context, levelId: Int, levelCodeName:String, userId: Int): Intent {
             return Intent(context, GameActivity::class.java).apply {
-                putExtra(EXTRA_LEVEL_ID, level.id)
+                putExtra(EXTRA_LEVEL_ID, levelId)
+                putExtra(EXTRA_LEVEL_CODENAME, levelCodeName)
                 putExtra(EXTRA_USER_ID,userId)
             }
         }
