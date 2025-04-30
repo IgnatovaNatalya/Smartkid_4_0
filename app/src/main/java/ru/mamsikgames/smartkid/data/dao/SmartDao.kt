@@ -18,6 +18,7 @@ import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.model.LevelModel
 import ru.mamsikgames.smartkid.domain.model.LevelParams
+import ru.mamsikgames.smartkid.domain.model.Round
 
 @Dao
 interface SmartDao {
@@ -30,7 +31,7 @@ interface SmartDao {
     fun updateRound(r: RoundEntity): Completable
 
     @Query("SELECT * FROM Round WHERE userId =:userId AND levelId= :levelId AND finished = 0 ORDER BY id DESC LIMIT 1")
-    fun getPendingRound(userId:Int, levelId:Int): Maybe<RoundEntity>
+    fun getPendingRound(userId:Int, levelId:Int): Maybe<Round>
 
     @Query("SELECT Round.*, Level.codeName FROM Round INNER JOIN Level ON Round.levelId = Level.id WHERE Round.userId=:userId ORDER BY Round.roundEnd DESC")
     fun getListRoundsWithNames(userId:Int): Flowable<List<RoundWithName>>

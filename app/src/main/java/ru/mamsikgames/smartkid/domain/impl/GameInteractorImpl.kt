@@ -8,6 +8,7 @@ import ru.mamsikgames.smartkid.domain.SmartRepository
 import ru.mamsikgames.smartkid.domain.TaskRepository
 import ru.mamsikgames.smartkid.domain.interactor.GameInteractor
 import ru.mamsikgames.smartkid.domain.model.LevelParams
+import ru.mamsikgames.smartkid.domain.model.Round
 import ru.mamsikgames.smartkid.domain.model.Task
 
 class GameInteractorImpl (
@@ -27,9 +28,7 @@ class GameInteractorImpl (
         return smartRepository.updateRound(r)
     }
 
-    override fun getPendingRound(
-        userId: Int, levelId: Int
-    ): Maybe<RoundEntity> {
+    override fun getPendingRound(userId: Int, levelId: Int): Maybe<Round> {
         return smartRepository.getPendingRound(userId, levelId)
     }
 
@@ -38,6 +37,10 @@ class GameInteractorImpl (
     }
     override fun newTask(levelParams: LevelParams): Task {
         return taskRepository.generateNewTask(levelParams)
+    }
+
+    override fun validateAnswer( task: Task, input: Int ): Boolean {
+        return taskRepository.validateAnswer(task, input)
     }
 
 }

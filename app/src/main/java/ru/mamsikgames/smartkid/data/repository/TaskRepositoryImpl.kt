@@ -4,11 +4,17 @@ import ru.mamsikgames.smartkid.domain.TaskRepository
 import ru.mamsikgames.smartkid.domain.model.LevelParams
 import ru.mamsikgames.smartkid.domain.model.Task
 import kotlin.math.min
-import kotlin.ranges.random
 
 class TaskRepositoryImpl : TaskRepository {
 
     private val taskStorage = mutableMapOf<Int, Task>()
+
+    val operations: Array<String> = arrayOf( //todo переделать к чертям на енумы
+        "plus",
+        "minus",
+        "multiply",
+        "divide"
+    )
 
     override fun getTask(level: LevelParams): Task {
         val savedTask = taskStorage[level.id]
@@ -33,8 +39,30 @@ class TaskRepositoryImpl : TaskRepository {
 
         return task
     }
-    override fun validateAnswer(task:Task, input:Int) {
-///todo ThinkManager testRes
+
+    override fun validateAnswer(task: Task, input: Int): Boolean {
+        with(task) {
+            when (task.equationType) {
+                null ->
+                    when (operation) {
+                        operations[0] -> return op1 + op2 == input
+                        operations[1] -> return op1 - op2 == input
+                        operations[2] -> return op1 * op2 == input
+                        operations[3] -> return op1 / op2 == input
+                    }
+
+                1 -> when (operation) {
+                    operations[0] -> return input + op2 == res
+                    operations[1] -> return input - op2 == res
+                }
+
+                2 -> when (operation) {
+                    operations[0] -> return op1 + input == res
+                    operations[1] -> return op1 - input == res
+                }
+            }
+            return false
+        }
     }
 
     private fun generatePlusTask(level: LevelParams): Task {

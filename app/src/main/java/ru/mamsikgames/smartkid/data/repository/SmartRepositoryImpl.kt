@@ -13,6 +13,7 @@ import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.SmartRepository
 import ru.mamsikgames.smartkid.domain.model.LevelModel
+import ru.mamsikgames.smartkid.domain.model.Round
 
 class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
 
@@ -34,8 +35,8 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
         return smartDao.getListRoundsWithNames(userId)
     }
 
-    override fun getPendingRound(userId: Int, operationId: Int): Maybe<RoundEntity> {
-        return smartDao.getPendingRound(userId, operationId)
+    override fun getPendingRound(userId: Int, levelId: Int): Maybe<Round> {
+        return smartDao.getPendingRound(userId, levelId)
     }
 
     override fun getRate(userId: Int): Flowable<Int> {

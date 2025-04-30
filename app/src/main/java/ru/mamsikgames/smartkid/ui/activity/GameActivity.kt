@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.UnderlineSpan
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,7 +14,6 @@ import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import java.lang.System.currentTimeMillis
 import ru.mamsikgames.smartkid.R
 import ru.mamsikgames.smartkid.databinding.ActivityGameBinding
-import ru.mamsikgames.smartkid.domain.model.Task
 import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
 import ru.mamsikgames.smartkid.ui.viewmodel.TaskRenderParams
 import kotlin.getValue
@@ -44,23 +42,17 @@ class GameActivity : AppCompatActivity() {
         binding.textViewGameLevelName.text = levelCodeName
         setListeners()
 
-        //get pending round
-        viewModel.getPendingRound(userId, levelId)
-        viewModel.pendingRound.observe(this) {
-            if (it != null) {
-                round = it
-                renderRound(round)
-            }
-        }
-
         //if created new round get id
         viewModel.newRoundId.observe(this) {
             if (it != null) round.id = it.toLong()
             binding.textViewGameRound.text = it.toString()
         }
 
-        viewModel.start(levelId)
+        viewModel.start(userId, levelId)
         viewModel.taskRenderParams.observe(this) { renderTask(it) }
+        viewModel.roundRenderParams.observe(this) {renderRound(it)}
+
+        viewModel.answerState.observe(this) {renderAnswer(it)}
     }
 
     private fun renderRound(r: RoundEntity) {
@@ -93,6 +85,18 @@ class GameActivity : AppCompatActivity() {
         round.duration = round.roundEnd - round.roundBegin
         round.finished = true
         viewModel.updateRound(round)
+    }
+
+
+
+    private fun renderAnswer(correct:Boolean) {
+        if (correct) {
+            gameSounds.playSoundCor()
+            gameSounds.playSoundCorrect()
+        }
+        else {
+            gameSounds.playSoundWrong()
+        }
     }
 
     private fun updateRound() { //todo сомнительно это
@@ -130,7 +134,7 @@ class GameActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.buttonOk.setOnClickListener {
             gameSounds.playSoundPlay()
-            viewModel.pressOk()
+            viewModel.pressOK()
         }
 
         binding.buttonErase.setOnClickListener {

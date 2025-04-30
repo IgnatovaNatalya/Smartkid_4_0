@@ -6,5 +6,5 @@ import ru.mamsikgames.smartkid.domain.model.Task
 interface TaskRepository {
     fun getTask(level: LevelParams): Task
     fun generateNewTask(level: LevelParams): Task
-    fun validateAnswer(): Boolean
+    fun validateAnswer(task:Task, input:Int): Boolean
 }

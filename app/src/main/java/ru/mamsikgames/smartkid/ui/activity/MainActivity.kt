@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.listLevelGroupAdaptersAssociator.observe(this) {
             levelGroupsAdapterAssociator = it
         }
-
     }
 
     private fun openLevel(level: LevelModel) {
@@ -93,7 +92,6 @@ class MainActivity : AppCompatActivity() {
         }
         return list
     }
-
 }
 
 
