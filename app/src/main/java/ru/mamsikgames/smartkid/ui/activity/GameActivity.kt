@@ -6,93 +6,85 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.UnderlineSpan
-import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.core.GameSounds
-import ru.mamsikgames.smartkid.core.ThinkManager
-import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import java.lang.System.currentTimeMillis
 import ru.mamsikgames.smartkid.R
 import ru.mamsikgames.smartkid.databinding.ActivityGameBinding
+import ru.mamsikgames.smartkid.domain.model.Task
 import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
+import ru.mamsikgames.smartkid.ui.viewmodel.TaskRenderParams
 import kotlin.getValue
 
 
 class GameActivity : AppCompatActivity() {
-    private var inputNum: Int =0
 
-    private val thinkManager: ThinkManager by inject()
-    private val gameSounds:  GameSounds  by inject()
-    private val viewModel: GameViewModel  by viewModel()
+    private val gameSounds: GameSounds by inject()
+    private val viewModel: GameViewModel by viewModel()
 
     private lateinit var binding: ActivityGameBinding
 
-    private lateinit var level: LevelEntity
-
-    private var userId = 1
-    private  var levelId:Int =0
-
-    private var state = false
-
-    private var round = RoundEntity(
-        null,
-        userId,
-        0,
-        currentTimeMillis() ,
-        0L,
-        false,
-        0L,
-        0,
-        0,
-        0,
-        0
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityGameBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         supportActionBar?.hide() ///
 
-        if (!intent.hasExtra(EXTRA_LEVEL_ID)) finish()
-        levelId = intent.getIntExtra(EXTRA_LEVEL_ID,0)
+        val userId = intent.getIntExtra(EXTRA_USER_ID, 0)
+        val levelId = intent.getIntExtra(EXTRA_LEVEL_ID, 0)
         val levelCodeName = intent.getStringExtra(EXTRA_LEVEL_CODENAME)
-        userId = intent.getIntExtra(EXTRA_USER_ID,0)
 
-        round.levelId = levelId
-        round.userId = userId
-
+        binding.textViewGameLevelName.text = levelCodeName
         setListeners()
 
-
         //get pending round
-        viewModel.getPendingRound(userId,levelId)
+        viewModel.getPendingRound(userId, levelId)
         viewModel.pendingRound.observe(this) {
-            if (it!=null) {
-                round =  it
-                setCorrect(round.numCorrect)
-                setWrong(round.numWrong)
+            if (it != null) {
+                round = it
+                renderRound(round)
             }
         }
 
-    //if created new round get id
+        //if created new round get id
         viewModel.newRoundId.observe(this) {
-            if (it!=null) round.id =  it.toLong()
+            if (it != null) round.id = it.toLong()
             binding.textViewGameRound.text = it.toString()
         }
 
-    //create & print task
-        if (!thinkManager.getTask(levelId)) //todo во viewmodel отправить
-            newTask()
+        viewModel.start(levelId)
+        viewModel.taskRenderParams.observe(this) { renderTask(it) }
+    }
 
-        printTask(null)
-        setOkState(state)
+    private fun renderRound(r: RoundEntity) {
+        setCorrect(r.numCorrect)
+        setWrong(r.numWrong)
+    }
+
+    private fun renderTask(taskRenderParams: TaskRenderParams) {
+        val str = taskRenderParams.taskStr
+
+        if (taskRenderParams.spanStart >= 0) {
+            val string = SpannableString(str)
+            string.setSpan(
+                UnderlineSpan(),
+                taskRenderParams.spanStart,
+                taskRenderParams.spanEnd,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            binding.textfieldTask.text = string
+        } else
+            binding.textfieldTask.text = str
+
+        setOkButtonState(taskRenderParams.btnOkState)
+        setEraseButtonState(taskRenderParams.btnEraseState)
     }
 
     private fun finishAndSave() {
@@ -103,132 +95,50 @@ class GameActivity : AppCompatActivity() {
         viewModel.updateRound(round)
     }
 
-
-    private fun newTask() {
-        //thinkManager.newTask(levelParams)
-        viewModel.newTask(level) // todo перенести
-        round.numTasks++
-    }
-
-    private fun updateRound() {
-        if (round.id !=null)
+    private fun updateRound() { //todo сомнительно это
+        if (round.id != null)
             viewModel.updateRound(round)
         else
-            if (round.numTasks >0) viewModel.insertRound(round)
-    }
-
-    private fun testRes(res:Int) {
-        if (!state) return
-
-        if (thinkManager.testRes(res)) {
-           gameSounds.playSoundCor()
-           gameSounds.playSoundCorrect()
-           setCorrect(++round.numCorrect)
-           newTask()
-        }
-        else {
-            gameSounds.playSoundWrong()
-            setWrong(++round.numWrong)
-        }
-        round.numEfforts++
-        inputNum = 0
-
-        updateRound()
-        printTask(null)
-        state=false
-        setOkState(state)
+            if (round.numTasks > 0) viewModel.insertRound(round)
     }
 
     private fun pressNum(pressedNum: Int) {
-
         gameSounds.playSoundButton()
-
-        if (inputNum <= 999999) {
-            inputNum = if (inputNum>0) {
-                inputNum*10 + pressedNum
-            } else pressedNum
-        }
-        printTask(inputNum)
-        state=true
-        setOkState(state)
-    }
-
-    private fun printTask(withInput:Int?) {
-        val tvTask = findViewById<TextView>(R.id.textfield_task)
-
-        val str = if (withInput!=null) thinkManager.printTask(withInput) else thinkManager.printTask()
-
-        when (level.equation) {
-            2 -> {
-                val startSpan = if (thinkManager.op1> 9 ) 5 else 4
-                val lenSpan = if (inputNum>9) 2 else 1
-                val string = SpannableString(str)
-                string.setSpan(UnderlineSpan(), startSpan, startSpan+lenSpan, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                tvTask.text = string
-            }
-            1 -> { ///
-                val startSpan = 0
-                val lenSpan = if (inputNum>9) 2 else 1
-                val string = SpannableString(str)
-                string.setSpan(UnderlineSpan(), startSpan, startSpan+lenSpan, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                tvTask.text = string
-            }
-            null ->
-                tvTask.text = str
-        }
+        viewModel.pressNum(pressedNum)
     }
 
     private fun setCorrect(cor: Int) {
-        val corTextView = findViewById<View>(R.id.correct_counter) as TextView
-        corTextView.text = cor.toString()
+        binding.correctCounter.text = cor.toString()
     }
 
     private fun setWrong(wr: Int) {
-        val wrTextView = findViewById<View>(R.id.wrong_counter) as TextView
-        wrTextView.text = wr.toString()
+        binding.wrongCounter.text = wr.toString()
     }
 
-    private fun doExit() {
-        round.numExits++
-        updateRound()
-        gameSounds.playSoundExit()
+    private fun setOkButtonState(state: Boolean) {
+        with (binding.buttonOk) {
+            if (state) setImageResource(R.drawable.btn_ok)
+            else setImageResource(R.drawable.btn_ok_dis)
+        }
     }
 
-    override fun onPause() {
-        doExit()
-        super.onPause()
-    }
-
-    private fun setOkState(state: Boolean) {
-        val ivBtnOk = findViewById<ImageView>(R.id.button_ok)
-        if (state)
-            ivBtnOk.setImageResource(R.drawable.btn_ok)
-        else
-            ivBtnOk.setImageResource(R.drawable.btn_ok_dis)
+    private fun setEraseButtonState(state: Boolean) {
+        if (state)  binding.buttonErase.setImageResource(R.drawable.btn_erase)
+        else binding.buttonErase.setImageResource(R.drawable.btn_erase)
     }
 
     private fun setListeners() {
-        val ivBtnOk = findViewById<ImageView>(R.id.button_ok)
-        ivBtnOk.setOnClickListener{ testRes(inputNum) }
+        binding.buttonOk.setOnClickListener {
+            gameSounds.playSoundPlay()
+            viewModel.pressOk()
+        }
 
-        val ivBtnErase = findViewById<ImageView>(R.id.button_erase)
-        ivBtnErase.setOnClickListener{
+        binding.buttonErase.setOnClickListener {
             gameSounds.playSoundErase()
-            inputNum /= 10
-            if (inputNum ==0) {
-                printTask(null)
-                state = false
-                setOkState(state)
-            }
-            else {
-                printTask(inputNum)
-                state = true
-                setOkState(state)
-            }
+            viewModel.pressErase()
         }
 
         binding.buttonBack.setOnClickListener { finish() }
-        binding.correctCounter.setOnClickListener { finishAndSave() }
 
         binding.button01.setOnClickListener { pressNum(1) }
         binding.button02.setOnClickListener { pressNum(2) }
@@ -242,18 +152,34 @@ class GameActivity : AppCompatActivity() {
         binding.button00.setOnClickListener { pressNum(0) }
     }
 
+    private fun doExit() {
+        viewModel.exitRound()
+//        round.numExits++
+//        updateRound()
+        gameSounds.playSoundExit()
+    }
+
+    override fun onPause() {
+        doExit()
+        super.onPause()
+    }
+
     companion object {
         const val EXTRA_LEVEL_ID = "EXTRA_LEVEL_ID"
         const val EXTRA_LEVEL_CODENAME = "EXTRA_LEVEL_CODENAME"
         const val EXTRA_USER_ID = "EXTRA_USER_ID"
 
-        fun newInstance(context: Context, levelId: Int, levelCodeName:String, userId: Int): Intent {
+        fun newInstance(
+            context: Context,
+            levelId: Int,
+            levelCodeName: String,
+            userId: Int
+        ): Intent {
             return Intent(context, GameActivity::class.java).apply {
                 putExtra(EXTRA_LEVEL_ID, levelId)
                 putExtra(EXTRA_LEVEL_CODENAME, levelCodeName)
-                putExtra(EXTRA_USER_ID,userId)
+                putExtra(EXTRA_USER_ID, userId)
             }
         }
     }
-
 }

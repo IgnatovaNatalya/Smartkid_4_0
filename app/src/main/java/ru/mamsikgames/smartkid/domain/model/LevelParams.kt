@@ -1,7 +1,7 @@
 package ru.mamsikgames.smartkid.domain.model
 
 data class LevelParams(
-    val id: Int? = 0,
+    val id: Int = 0,
     val name: String = "",//
     val codeName: String = "",
     val op1Min: Int? = null,

@@ -28,6 +28,7 @@ class ChooseLevelViewModel(private val chooseLevelInteractor: ChooseLevelInterac
     var listLevelGroupAdaptersAssociator: LiveData<List<LevelGroupAdaptersAssociator>> = _listLevelGroupAdaptersAssociator
 
     init {
+        getCurrentUser()
         getListLevelsAndGroups()
     }
 

@@ -37,10 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         gameSounds.initSounds(this)
 
-        viewModel.getCurrentUser()
-        viewModel.currentUserId.observe(this) {
-            if (it != null) userId = it
-        }
+        viewModel.currentUserId.observe(this) { if (it != null) userId = it }
 
         //LEVELS
 
@@ -48,12 +45,11 @@ class MainActivity : AppCompatActivity() {
 
         levelLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (position in getSectionHeaders() ) 2 else 1
-             }
+                return if (position in getSectionHeaders()) 2 else 1
+            }
         }
         binding.recyclerLevels.layoutManager = levelLayoutManager
         binding.recyclerLevels.adapter = adapterLevels
-
 
         //LEVEL GROUPS
 
@@ -62,35 +58,35 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerLevelGroups.adapter = adapterLevelGroups
 
-
         //Observe
 
         viewModel.listLevels.observe(this) { adapterLevels.setList(it) }
-        viewModel.listLevelGroups.observe(this) { adapterLevelGroups.setList(it)}
-        viewModel.listLevelGroupAdaptersAssociator.observe(this) { levelGroupsAdapterAssociator = it}
+        viewModel.listLevelGroups.observe(this) { adapterLevelGroups.setList(it) }
+        viewModel.listLevelGroupAdaptersAssociator.observe(this) {
+            levelGroupsAdapterAssociator = it
+        }
 
     }
 
     private fun openLevel(level: LevelModel) {
         gameSounds.playSoundPlay()
-        val intent = GameActivity.newInstance(this, level, userId)
+        val intent = GameActivity.newInstance(this, level.id, level.codeName, userId)
         startActivity(intent)
     }
 
     private fun clickGroup(groupPos: Int) {
         binding.recyclerLevelGroups.smoothScrollToPosition(groupPos)
-        binding.recyclerLevels.smoothScrollToPosition(getLevelPos(groupPos)+1)
-
+        binding.recyclerLevels.smoothScrollToPosition(getLevelPos(groupPos))
     }
 
-    private fun getLevelPos(groupPos:Int) : Int{
+    private fun getLevelPos(groupPos: Int): Int {
         for (lga in levelGroupsAdapterAssociator) {
-            if (lga.groupAdapterPos == groupPos) return  lga.levelAdapterPos
+            if (lga.groupAdapterPos == groupPos) return lga.levelAdapterPos
         }
         return 0
     }
 
-    private fun getSectionHeaders() : List<Int> {
+    private fun getSectionHeaders(): List<Int> {
         val list = mutableListOf<Int>()
         for (lga in levelGroupsAdapterAssociator) {
             list.add(lga.levelAdapterPos)

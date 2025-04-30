@@ -4,11 +4,16 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
-import ru.mamsikgames.smartkid.data.repository.SmartRepositoryImpl
+import ru.mamsikgames.smartkid.domain.SmartRepository
+import ru.mamsikgames.smartkid.domain.TaskRepository
 import ru.mamsikgames.smartkid.domain.interactor.GameInteractor
 import ru.mamsikgames.smartkid.domain.model.LevelParams
+import ru.mamsikgames.smartkid.domain.model.Task
 
-class GameInteractorImpl(private val smartRepository: SmartRepositoryImpl) : GameInteractor {
+class GameInteractorImpl (
+    private val smartRepository: SmartRepository,
+    private val taskRepository: TaskRepository,
+) : GameInteractor {
 
     override fun getLevelParams(id: Int): Single<LevelParams> {
         return smartRepository.getLevelParams(id)
@@ -26,6 +31,13 @@ class GameInteractorImpl(private val smartRepository: SmartRepositoryImpl) : Gam
         userId: Int, levelId: Int
     ): Maybe<RoundEntity> {
         return smartRepository.getPendingRound(userId, levelId)
+    }
+
+    override fun getTask(levelParams: LevelParams): Task {
+        return taskRepository.getTask(levelParams)
+    }
+    override fun newTask(levelParams: LevelParams): Task {
+        return taskRepository.generateNewTask(levelParams)
     }
 
 }

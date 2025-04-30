@@ -19,7 +19,6 @@ interface SmartRepository {
     fun getListUsers(): Flowable<List<UserEntity>>
     fun getCurrentUser(): Flowable<UserEntity>
 
-
     fun insertRound(r: RoundEntity) : Single<Long>
     fun updateRound(r: RoundEntity) : Completable
     fun getListRoundsWithNames(userId:Int): Flowable<List<RoundWithName>>

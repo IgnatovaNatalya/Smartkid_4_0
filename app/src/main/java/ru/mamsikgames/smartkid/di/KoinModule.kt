@@ -7,6 +7,9 @@ import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.core.ThinkManager
 import ru.mamsikgames.smartkid.data.db.SmartDb
 import ru.mamsikgames.smartkid.data.repository.SmartRepositoryImpl
+import ru.mamsikgames.smartkid.data.repository.TaskRepositoryImpl
+import ru.mamsikgames.smartkid.domain.SmartRepository
+import ru.mamsikgames.smartkid.domain.TaskRepository
 import ru.mamsikgames.smartkid.domain.impl.ChooseLevelInteractorImpl
 import ru.mamsikgames.smartkid.domain.impl.GameInteractorImpl
 import ru.mamsikgames.smartkid.domain.interactor.ChooseLevelInteractor
@@ -24,14 +27,14 @@ val DatabaseModule = module {
 }
 
 val repositoryModule = module {
-    single<SmartRepositoryImpl> { SmartRepositoryImpl(get()) }
-    single { ThinkManager }
+    single<SmartRepository> { SmartRepositoryImpl(get()) }
+    single<TaskRepository> { TaskRepositoryImpl() }
     single { GameSounds }
 }
 
 val interactorModule = module {
     factory<ChooseLevelInteractor> { ChooseLevelInteractorImpl(get()) }
-    factory<GameInteractor> { GameInteractorImpl(get()) }
+    factory<GameInteractor> { GameInteractorImpl(get(), get()) }
 }
 
 val viewModelModule = module {
