@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.mamsikgames.smartkid.data.entity.RoundEntity
 import ru.mamsikgames.smartkid.domain.interactor.GameInteractor
 import ru.mamsikgames.smartkid.domain.model.LevelParams
 import ru.mamsikgames.smartkid.domain.model.Round
@@ -55,18 +54,29 @@ class GameViewModel(private val gameInteractor: GameInteractor) : ViewModel() {
         gameInteractor.getPendingRound(userId, levelId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                round = it
-                    ?: Round(
-                        userId = userId,
-                        levelId = levelId,
-                        roundBegin = currentTimeMillis()
-                    )
-                _roundRenderParams.postValue(round)
-            }, {
-            }).let {
+            .subscribe(
+                { it ->
+                    round = it
+                    _roundRenderParams.postValue(round)
+                }, { error ->
+                    println("$error Error getting pending round")
+                    round = createNewRound(userId, levelId)
+                    _roundRenderParams.postValue(round)
+                }, {
+                    round = createNewRound(userId, levelId)
+                    _roundRenderParams.postValue(round)
+                }).let {
                 compositeDisposable.add(it)
             }
+    }
+
+
+    private fun createNewRound(userId: Int, levelId: Int): Round {
+        return Round(
+            userId = userId,
+            levelId = levelId,
+            roundBegin = currentTimeMillis()
+        )
     }
 
     fun pressNum(pressedNum: Int) {
@@ -77,60 +87,60 @@ class GameViewModel(private val gameInteractor: GameInteractor) : ViewModel() {
     }
 
     fun pressErase() {
-        inputNum = inputNum?.div(10)
+        inputNum = inputNum?.let {
+            if (it>9) inputNum?.div(10)
+            else null
+        }
+        _taskRenderParams.postValue((TaskFormatter.format(task, inputNum)))
     }
 
     fun pressOK() {
         inputNum?.let {
             val result = gameInteractor.validateAnswer(task, it)
-
-            if (result)
-                round.numCorrect = round.numCorrect!! + 1
-            else
-                round.numWrong = round.numWrong!! + 1
-
-            _roundRenderParams.postValue(round)
-
-            round.numTasks = round.numTasks!! + 1
-            round.numEfforts = round.numEfforts!! + 1
-
-            _answerState.postValue(result)
-
-            if (result) task = gameInteractor.newTask(level)
-            _taskRenderParams.postValue(TaskFormatter.format(task, null))
-
+            updateRoundInfo(result)
+            if (result) newTask()
             inputNum = null
         }
-
     }
 
+    private fun updateRoundInfo(result: Boolean) {
+        if (result)
+            round.numCorrect = round.numCorrect!! + 1
+        else
+            round.numWrong = round.numWrong!! + 1
 
+        round.numTasks = round.numTasks!! + 1
+        round.numEfforts = round.numEfforts!! + 1
 
-    fun insertRound(r: RoundEntity) {
-        gameInteractor.insertRound(r)
+        _roundRenderParams.postValue(round)
+        _answerState.postValue(result)
+    }
+
+    fun newTask() {
+        task = gameInteractor.newTask(level)
+        _taskRenderParams.postValue(TaskFormatter.format(task, null))
+    }
+
+    fun completeRound() {
+        saveRound(round)
+    }
+
+    private fun saveRound(round: Round) {
+        gameInteractor.insertRound(Round.convertToDb(round))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                _newRoundId.postValue(it)
             }, {
             }).let {
                 compositeDisposable.add(it)
             }
     }
 
-    fun updateRound(r: RoundEntity) {
-        gameInteractor.updateRound(r)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-            }, {
-            }).let {
-                compositeDisposable.add(it)
-            }
-    }
 
     override fun onCleared() {
         compositeDisposable.dispose()
         super.onCleared()
     }
 }
+
+

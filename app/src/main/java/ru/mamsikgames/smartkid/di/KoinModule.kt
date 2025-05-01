@@ -4,7 +4,6 @@ import androidx.room.Room
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.mamsikgames.smartkid.core.GameSounds
-import ru.mamsikgames.smartkid.core.ThinkManager
 import ru.mamsikgames.smartkid.data.db.SmartDb
 import ru.mamsikgames.smartkid.data.repository.SmartRepositoryImpl
 import ru.mamsikgames.smartkid.data.repository.TaskRepositoryImpl
@@ -27,9 +26,9 @@ val DatabaseModule = module {
 }
 
 val repositoryModule = module {
-    single<SmartRepository> { SmartRepositoryImpl(get()) }
-    single<TaskRepository> { TaskRepositoryImpl() }
-    single { GameSounds }
+    factory<SmartRepository> { SmartRepositoryImpl(get()) }
+    factory<TaskRepository> { TaskRepositoryImpl() }
+    factory { GameSounds }
 }
 
 val interactorModule = module {

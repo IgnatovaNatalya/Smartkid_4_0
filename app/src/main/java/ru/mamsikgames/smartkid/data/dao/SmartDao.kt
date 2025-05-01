@@ -11,7 +11,6 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import ru.mamsikgames.smartkid.domain.model.Leader
 import ru.mamsikgames.smartkid.domain.model.Rate
-import ru.mamsikgames.smartkid.domain.model.RoundWithName
 import ru.mamsikgames.smartkid.data.entity.LevelEntity
 import ru.mamsikgames.smartkid.data.entity.LevelGroupEntity
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
@@ -32,9 +31,6 @@ interface SmartDao {
 
     @Query("SELECT * FROM Round WHERE userId =:userId AND levelId= :levelId AND finished = 0 ORDER BY id DESC LIMIT 1")
     fun getPendingRound(userId:Int, levelId:Int): Maybe<Round>
-
-    @Query("SELECT Round.*, Level.codeName FROM Round INNER JOIN Level ON Round.levelId = Level.id WHERE Round.userId=:userId ORDER BY Round.roundEnd DESC")
-    fun getListRoundsWithNames(userId:Int): Flowable<List<RoundWithName>>
 
 //user
     @Update

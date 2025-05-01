@@ -9,14 +9,12 @@ import android.text.style.UnderlineSpan
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.mamsikgames.smartkid.core.GameSounds
-import ru.mamsikgames.smartkid.data.entity.RoundEntity
-import java.lang.System.currentTimeMillis
 import ru.mamsikgames.smartkid.R
+import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.databinding.ActivityGameBinding
+import ru.mamsikgames.smartkid.domain.model.Round
 import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
 import ru.mamsikgames.smartkid.ui.viewmodel.TaskRenderParams
-import kotlin.getValue
 
 
 class GameActivity : AppCompatActivity() {
@@ -40,13 +38,8 @@ class GameActivity : AppCompatActivity() {
         val levelCodeName = intent.getStringExtra(EXTRA_LEVEL_CODENAME)
 
         binding.textViewGameLevelName.text = levelCodeName
-        setListeners()
 
-        //if created new round get id
-        viewModel.newRoundId.observe(this) {
-            if (it != null) round.id = it.toLong()
-            binding.textViewGameRound.text = it.toString()
-        }
+        setListeners()
 
         viewModel.start(userId, levelId)
         viewModel.taskRenderParams.observe(this) { renderTask(it) }
@@ -55,7 +48,7 @@ class GameActivity : AppCompatActivity() {
         viewModel.answerState.observe(this) {renderAnswer(it)}
     }
 
-    private fun renderRound(r: RoundEntity) {
+    private fun renderRound(r: Round) {
         setCorrect(r.numCorrect)
         setWrong(r.numWrong)
     }
@@ -79,16 +72,6 @@ class GameActivity : AppCompatActivity() {
         setEraseButtonState(taskRenderParams.btnEraseState)
     }
 
-    private fun finishAndSave() {
-        gameSounds.playSoundPlay()
-        round.roundEnd = currentTimeMillis()
-        round.duration = round.roundEnd - round.roundBegin
-        round.finished = true
-        viewModel.updateRound(round)
-    }
-
-
-
     private fun renderAnswer(correct:Boolean) {
         if (correct) {
             gameSounds.playSoundCor()
@@ -99,23 +82,16 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateRound() { //todo сомнительно это
-        if (round.id != null)
-            viewModel.updateRound(round)
-        else
-            if (round.numTasks > 0) viewModel.insertRound(round)
-    }
-
     private fun pressNum(pressedNum: Int) {
         gameSounds.playSoundButton()
         viewModel.pressNum(pressedNum)
     }
 
-    private fun setCorrect(cor: Int) {
+    private fun setCorrect(cor: Int?) {
         binding.correctCounter.text = cor.toString()
     }
 
-    private fun setWrong(wr: Int) {
+    private fun setWrong(wr: Int?) {
         binding.wrongCounter.text = wr.toString()
     }
 
@@ -157,9 +133,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun doExit() {
-        viewModel.exitRound()
-//        round.numExits++
-//        updateRound()
+        viewModel.completeRound()
         gameSounds.playSoundExit()
     }
 

@@ -10,7 +10,6 @@ import ru.mamsikgames.smartkid.data.entity.UserEntity
 import ru.mamsikgames.smartkid.domain.SmartRepository
 import ru.mamsikgames.smartkid.domain.model.Leader
 import ru.mamsikgames.smartkid.domain.model.Rate
-import ru.mamsikgames.smartkid.domain.model.RoundWithName
 import org.koin.core.component.KoinComponent
 
 
@@ -27,8 +26,8 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
     private val _recordCountUsers = MutableLiveData<Int>()
     var recordCountUsers: LiveData<Int> = _recordCountUsers
 
-    private val _recordRounds = MutableLiveData<List<RoundWithName>>()
-    var recordRounds: LiveData<List<RoundWithName>> = _recordRounds
+//    private val _recordRounds = MutableLiveData<List<RoundWithName>>()
+//    var recordRounds: LiveData<List<RoundWithName>> = _recordRounds
 
 
     private val _recordRates = MutableLiveData<List<Rate>>()
@@ -57,20 +56,6 @@ class SmartViewModel(application: Application) : AndroidViewModel(application), 
 //    } todo вернуть добавление пользователя
 
 
-
-
-
-    fun getListRoundsWithNames(userId: Int) {
-        smartRepository.getListRoundsWithNames(userId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _recordRounds.postValue(it)
-            }, {
-            }).let {
-                compositeDisposable.add(it)
-            }
-    }
 
 
     fun getRates(userId: Int) {

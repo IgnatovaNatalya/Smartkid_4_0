@@ -83,9 +83,7 @@ class DialogRoundResults( activity: Activity,themeResId:Int,
 
         tvDuration.text = durStr
 
-//exits
-        tvExits.text = round.numExits.toString()
-
+        ///
         ivBtnOk.setOnClickListener{
             onClickButton.invoke()
         }

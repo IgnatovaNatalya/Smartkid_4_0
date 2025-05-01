@@ -79,8 +79,8 @@ class TaskRepositoryImpl : TaskRepository {
                 (op2Min != null && op2Max == null) &&
                 (resMin == null && resMax != null)
             ) {
-                rres = (op1Min..resMax).random()
-                oop1 = (op1Min..rres).random()
+                oop1 = ((op1Min + op2Min)..(resMax - op2Min)).random()
+                rres = ((oop1 + op2Min)..resMax).random()
                 oop2 = rres - oop1
 
             } else
@@ -97,18 +97,18 @@ class TaskRepositoryImpl : TaskRepository {
                     if (op2Min != null) oop2 = (op2Min..op2Max!!).random()
                 }
 
-
             if ((oop1 != null) && (oop2 != null)) rres = oop1 + oop2
             if ((oop1 != null) && (rres != null)) oop2 = rres - oop1
             if ((oop2 != null) && (rres != null)) oop1 = rres - oop2
 
-            if (oop1 != null) op1 = oop1
-            if (oop2 != null) op2 = oop2
-            if (rres != null) res = rres
+            oop1?.let { op1 = it }
+            oop2?.let { op2 = it }
+            rres?.let { res = it }
 
             return Task(op1, op2, res, operation, equation)
         }
     }
+
 
 
     private fun generateMinusTask(level: LevelParams): Task {
@@ -170,22 +170,14 @@ class TaskRepositoryImpl : TaskRepository {
 
     private fun generateDivideTask(level: LevelParams): Task {
 
-        var op1 = 0
-        var op2 = 0
-        var res = 0
-
-        var oop1: Int? = null
-        var oop2: Int? = null
-        var rres: Int? = null
-
         with(level) {
-            if ((op1Min != null) && (op1Max != null)) oop1 = (op1Min..op1Max).random()
-            if ((op2Min != null) && (op2Max != null)) oop2 = (op2Min..op2Max).random()
-            if ((resMin != null) && (resMax != null)) rres = (resMin..resMax).random()
+            if ((op1Min == null) || (op1Max == null) || (op2Min == null) || (op2Max == null))
+                throw IllegalArgumentException("Wrong parameters")
 
-            if ((oop1 != null) && (oop2 != null)) rres = oop1 / oop2
-            if ((oop1 != null) && (rres != null)) oop2 = oop1 / rres
-            if ((oop2 != null) && (rres != null)) oop1 = rres * oop2
+            val op1 = (op1Min..op1Max).random()
+            val op2 = (op2Min..op2Max).random()
+
+            val res = op1 * op2
 
             return Task(op1, op2, res, operation, equation)
         }

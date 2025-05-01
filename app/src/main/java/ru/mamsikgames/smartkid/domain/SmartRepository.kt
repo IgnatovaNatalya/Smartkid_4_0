@@ -11,7 +11,6 @@ import ru.mamsikgames.smartkid.domain.model.LevelModel
 import ru.mamsikgames.smartkid.domain.model.LevelParams
 import ru.mamsikgames.smartkid.domain.model.Rate
 import ru.mamsikgames.smartkid.domain.model.Round
-import ru.mamsikgames.smartkid.domain.model.RoundWithName
 
 interface SmartRepository {
     //fun addUser(strName:String): Completable
@@ -22,7 +21,6 @@ interface SmartRepository {
 
     fun insertRound(r: RoundEntity) : Single<Long>
     fun updateRound(r: RoundEntity) : Completable
-    fun getListRoundsWithNames(userId:Int): Flowable<List<RoundWithName>>
     fun getPendingRound(userId:Int, operationId:Int): Maybe<Round>
 
     fun getRate(userId:Int): Flowable<Int>

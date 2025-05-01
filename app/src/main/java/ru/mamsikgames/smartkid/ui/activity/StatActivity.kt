@@ -37,12 +37,12 @@ class StatActivity : AppCompatActivity() {
         val adapterStat = AdapterStat()
         val recyclerStat: RecyclerView = findViewById(R.id.recycler_Stat)
 
-        viewModel.getListRoundsWithNames(currentUserId)
-        viewModel.recordRounds.observe(this) {
-            if (it != null) {
-                adapterStat.setList(it)
-            }
-        }
+//        viewModel.getListRoundsWithNames(currentUserId)
+//        viewModel.recordRounds.observe(this) {
+//            if (it != null) {
+//                adapterStat.setList(it)
+//            }
+//        }
         recyclerStat.adapter = adapterStat
 
         val ivBtnBack = findViewById<ImageView>(R.id.imageView_Stat_buttonBack)

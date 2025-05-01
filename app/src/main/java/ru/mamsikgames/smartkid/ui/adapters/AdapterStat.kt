@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import ru.mamsikgames.smartkid.R
-import ru.mamsikgames.smartkid.domain.model.RoundWithName
+import ru.mamsikgames.smartkid.data.entity.RoundEntity
+import ru.mamsikgames.smartkid.domain.model.Round
 import ru.mamsikgames.smartkid.ui.util.TextViewOutline
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,7 +17,7 @@ import java.util.*
 class AdapterStat : RecyclerView.Adapter<AdapterStat.StatViewHolder>() {
 
 
-    private var roundsList = mutableListOf<RoundWithName>()
+    private var roundsList = mutableListOf<RoundEntity>()
     //private lateinit var onClick: ((RoundWithName) -> Unit)
 
     class StatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,7 +28,7 @@ class AdapterStat : RecyclerView.Adapter<AdapterStat.StatViewHolder>() {
         //private val tvNumExits:TextViewOutline = itemView.findViewById(R.id.textView_Stat_NumExits)
         private val tvNumExits:TextViewOutline = itemView.findViewById(R.id.textView_Stat_NumExits)
 
-        fun bind(roundWN:RoundWithName, sameDate:Boolean) {
+        fun bind(roundWN: RoundEntity, sameDate:Boolean) {
 
             fun showDate(show:Boolean,strDate:String?) {
                 val strToday = "Сегодня"
@@ -35,8 +36,8 @@ class AdapterStat : RecyclerView.Adapter<AdapterStat.StatViewHolder>() {
                 if(show) {
                     tvDate.isVisible = true
                     if (strDate!=null)tvDate.text=strDate
-                    if (DateUtils.isToday(roundWN.roundEnd)) tvDate.text = strToday
-                    if (DateUtils.isToday(roundWN.roundEnd + DateUtils.DAY_IN_MILLIS )) tvDate.text = strYesterday
+//                    if (DateUtils.isToday(roundWN.roundEnd?.toLong())) tvDate.text = strToday
+//                    if (DateUtils.isToday(roundWN.roundEnd + DateUtils.DAY_IN_MILLIS )) tvDate.text = strYesterday
                 }
                 else{
                     tvDate.isVisible = false
@@ -45,12 +46,11 @@ class AdapterStat : RecyclerView.Adapter<AdapterStat.StatViewHolder>() {
             val simpleDateFormat = SimpleDateFormat("dd.MM.yy", Locale.ROOT)
             showDate(!sameDate, simpleDateFormat.format(roundWN.roundEnd))
 
-            tvLevelName.text = roundWN.codeName
+            //tvLevelName.text = roundWN.codeName
             tvNumCorrect.text = roundWN.numCorrect.toString()
 
             //val str = "${roundWN.numCorrect}/${roundWN.numWrong}/${roundWN.numEfforts}/${roundWN.numExits}"
             tvNumWrong.text = roundWN.numWrong.toString()
-            tvNumExits.text = roundWN.numExits.toString()
         }
     }
 
@@ -68,7 +68,7 @@ class AdapterStat : RecyclerView.Adapter<AdapterStat.StatViewHolder>() {
         holder.bind(roundsList[position],sameDate)
     }
 
-    fun setList(list: List<RoundWithName>) {
+    fun setList(list: List<RoundEntity>) {
         roundsList.clear()
         roundsList.addAll(list)
         notifyDataSetChanged()

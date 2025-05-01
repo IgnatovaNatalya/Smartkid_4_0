@@ -12,6 +12,7 @@ object TaskFormatter {
 
     fun format(task: Task, input: Int?): TaskRenderParams {
         val inputStr = input?.toString() ?: " "
+        //val inputStr = if (input==null) " " else input.toString()
         val operatorSymbol = operationsMap[task.operation] ?: ""
 
         val taskStr = when (task.equationType) {
@@ -25,12 +26,12 @@ object TaskFormatter {
         when (task.equationType) {
             1 -> {
                 taskParams.spanStart = 0
-                taskParams.spanEnd = input.toString().length
+                taskParams.spanEnd = inputStr.length
             }
 
             2 -> {
                 taskParams.spanStart = task.op1.toString().length + 3
-                taskParams.spanEnd = taskParams.spanStart + input.toString().length
+                taskParams.spanEnd = taskParams.spanStart + inputStr.length
             }
         }
 

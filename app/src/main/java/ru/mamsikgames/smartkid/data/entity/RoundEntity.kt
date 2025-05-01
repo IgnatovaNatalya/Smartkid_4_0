@@ -18,6 +18,5 @@ data class RoundEntity(
     var numTasks: Int = 0,
     var numEfforts: Int = 0,
     var numCorrect: Int = 0,
-    var numWrong: Int = 0,
-    var numExits: Int = 0,
+    var numWrong: Int = 0
 ) : Serializable

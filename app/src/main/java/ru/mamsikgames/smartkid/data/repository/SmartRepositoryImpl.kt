@@ -6,7 +6,6 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import ru.mamsikgames.smartkid.domain.model.Leader
 import ru.mamsikgames.smartkid.domain.model.Rate
-import ru.mamsikgames.smartkid.domain.model.RoundWithName
 import ru.mamsikgames.smartkid.data.dao.SmartDao
 import ru.mamsikgames.smartkid.domain.model.LevelParams
 import ru.mamsikgames.smartkid.data.entity.RoundEntity
@@ -16,7 +15,6 @@ import ru.mamsikgames.smartkid.domain.model.LevelModel
 import ru.mamsikgames.smartkid.domain.model.Round
 
 class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
-
 
     override fun insertRound(r: RoundEntity): Single<Long> {
         return smartDao.insertRound(r)
@@ -31,9 +29,6 @@ class SmartRepositoryImpl(private val smartDao: SmartDao) : SmartRepository {
         return smartDao.setCurrentUser(userId)
     }
 
-    override fun getListRoundsWithNames(userId: Int): Flowable<List<RoundWithName>> {
-        return smartDao.getListRoundsWithNames(userId)
-    }
 
     override fun getPendingRound(userId: Int, levelId: Int): Maybe<Round> {
         return smartDao.getPendingRound(userId, levelId)
