@@ -4,16 +4,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.LevelsAdapter
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
 import ru.mamsikgames.smartkid.domain.model.LevelModel
-import ru.mamsikgames.smartkid.ui.util.CenterLayoutManager
 import ru.mamsikgames.smartkid.ui.adapters.LevelGroupsAdapter
-import ru.mamsikgames.smartkid.ui.util.LevelGroupAdaptersAssociator
+import ru.mamsikgames.smartkid.ui.util.CenterLayoutManager
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val adapterLevels = LevelsAdapter { openLevel(it) }
     private val adapterLevelGroups = LevelGroupsAdapter { clickGroup(it) }
 
-    private var levelGroupsAdapterAssociator = listOf<LevelGroupAdaptersAssociator>()
+    private var levelGroupsMap = mapOf<Int, Int>()
 
     private var userId = 0
 
@@ -45,9 +44,18 @@ class MainActivity : AppCompatActivity() {
 
         levelLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (position in getSectionHeaders()) 2 else 1
+                return if (position in levelGroupsMap.keys) 2 else 1
             }
         }
+
+        binding.recyclerLevels.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                when (val i = levelLayoutManager.findFirstVisibleItemPosition()) {
+                    i -> if (i in levelGroupsMap.keys) switchGroup(i)
+                }
+            }
+        })
+
         binding.recyclerLevels.layoutManager = levelLayoutManager
         binding.recyclerLevels.adapter = adapterLevels
 
@@ -62,9 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.listLevels.observe(this) { adapterLevels.setList(it) }
         viewModel.listLevelGroups.observe(this) { adapterLevelGroups.setList(it) }
-        viewModel.listLevelGroupAdaptersAssociator.observe(this) {
-            levelGroupsAdapterAssociator = it
-        }
+        viewModel.mapGroupLevels.observe(this) { levelGroupsMap = it }
     }
 
     private fun openLevel(level: LevelModel) {
@@ -78,20 +84,20 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerLevels.smoothScrollToPosition(getLevelPos(groupPos))
     }
 
+    private fun switchGroup(levelPos: Int) {
+        binding.recyclerLevelGroups.smoothScrollToPosition(getGroupPos(levelPos))
+    }
+
     private fun getLevelPos(groupPos: Int): Int {
-        for (lga in levelGroupsAdapterAssociator) {
-            if (lga.groupAdapterPos == groupPos) return lga.levelAdapterPos
-        }
+        for (lgm in levelGroupsMap)
+            if (lgm.value == groupPos) return lgm.key
         return 0
     }
 
-    private fun getSectionHeaders(): List<Int> {
-        val list = mutableListOf<Int>()
-        for (lga in levelGroupsAdapterAssociator) {
-            list.add(lga.levelAdapterPos)
-        }
-        return list
+    private fun getGroupPos(levelPos: Int): Int {
+        return levelGroupsMap[levelPos]?:0
     }
+
 }
 
 

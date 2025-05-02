@@ -3,237 +3,212 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/a4_game_background">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:importantForAccessibility="no"
-            android:id="@+id/imageView_backWinter"
-            android:layout_width="880dp"
-            android:layout_height="wrap_content"
-            android:foregroundGravity="center"
-            app:srcCompat="@drawable/back_winter" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView_Game_userName"
-        style="@style/NormalTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-
-        android:layout_marginBottom="10dp"
-
-        tools:text="Соня"
-        app:layout_constraintBottom_toTopOf="@+id/correct_counter"
-        app:layout_constraintStart_toStartOf="@id/correct_counter"/>
-
-    <TextView
-        android:id="@+id/textView_Game_Round"
-        style="@style/NormalTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/correct_counter"
-        app:layout_constraintEnd_toStartOf="@+id/textView_Game_levelName"
-        app:layout_constraintStart_toEndOf="@+id/textView_Game_userName"
-        tools:text="11" />
-
-    <TextView
-        android:id="@+id/textView_Game_levelName"
-        style="@style/NormalTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="10dp"
-        tools:text="С-1"
-        app:layout_constraintBottom_toTopOf="@+id/correct_counter"
-        app:layout_constraintEnd_toEndOf="@id/correct_counter"/>
-
-
-    <TextView
-        android:id="@+id/correct_counter"
-        style="@style/CorrectFieldStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/band1"
-        android:gravity="center"
-
-        android:text="@string/_0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!-- android:fontFamily="@font/rubik_medium" -->
-
-    <TextView
-        android:id="@+id/textfield_task"
-        style="@style/TaskTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="0dp"
-
-        android:background="@drawable/bg_task"
-        android:gravity="center"
-
-        tools:text="3+5="
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wrong_counter" />
-
-    <ImageView android:contentDescription="@string/_1"
-        android:id="@+id/button01"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button02"
-        app:layout_constraintEnd_toStartOf="@+id/button02"
-        app:srcCompat="@drawable/num1" />
-
-    <ImageView android:contentDescription="@string/_2"
-        android:id="@+id/button02"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="20dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textfield_task"
-        app:srcCompat="@drawable/num2" />
-
-    <ImageView android:contentDescription="@string/_3"
-        android:id="@+id/button03"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-
-        android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button02"
-        app:layout_constraintStart_toEndOf="@+id/button02"
-        app:srcCompat="@drawable/num3" />
-
-
-
-    <ImageView android:contentDescription="@string/_4"
-        android:id="@+id/button04"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-
-        app:layout_constraintBottom_toBottomOf="@+id/button05"
-        app:layout_constraintEnd_toEndOf="@+id/button01"
-        app:srcCompat="@drawable/num4"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageView android:contentDescription="@string/_5"
-        android:id="@+id/button05"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-
-        app:layout_constraintBottom_toBottomOf="@+id/button06"
-        app:layout_constraintEnd_toEndOf="@+id/button02"
-        app:srcCompat="@drawable/num5" />
-
-    <ImageView android:contentDescription="@string/_6"
-        android:id="@+id/button06"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="20dp"
-
-        app:layout_constraintStart_toStartOf="@+id/button03"
-        app:layout_constraintTop_toBottomOf="@+id/button03"
-        app:srcCompat="@drawable/num6" />
-
-    <ImageView android:contentDescription="@string/_7"
-        android:id="@+id/button07"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="20dp"
-
-        app:layout_constraintStart_toStartOf="@+id/button04"
-        app:layout_constraintTop_toBottomOf="@+id/button04"
-        app:srcCompat="@drawable/num7" />
-
-    <ImageView android:contentDescription="@string/_8"
-        android:id="@+id/button08"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-
-        app:layout_constraintBottom_toBottomOf="@+id/button07"
-        app:layout_constraintStart_toStartOf="@+id/button05"
-        app:srcCompat="@drawable/num8" />
-
-    <ImageView android:contentDescription="@string/_9"
-        android:id="@+id/button09"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-
-        app:layout_constraintBottom_toBottomOf="@+id/button08"
-        app:layout_constraintStart_toStartOf="@+id/button06"
-        app:srcCompat="@drawable/num9" />
-
-    <ImageView android:contentDescription="@string/_0"
-        android:id="@+id/button00"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="20dp"
-
-        app:layout_constraintStart_toStartOf="@+id/button08"
-        app:layout_constraintTop_toBottomOf="@+id/button08"
-        app:srcCompat="@drawable/num0" />
-
-    <TextView
-        android:id="@+id/wrong_counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_0"
-        android:textAppearance="@style/WrongFieldStyle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correct_counter" />
-
-    <ImageView android:contentDescription="@string/refresh"
-        android:id="@+id/button_erase"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-
-        app:layout_constraintStart_toStartOf="@+id/button07"
-        app:layout_constraintTop_toBottomOf="@+id/button07"
-        app:srcCompat="@drawable/btn_erase" />
-
-    <ImageView android:contentDescription="@string/ok"
-        android:id="@+id/button_ok"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        app:layout_constraintEnd_toEndOf="@+id/button09"
-        app:layout_constraintTop_toBottomOf="@+id/button09"
-        app:srcCompat="@drawable/btn_ok" />
-<!--android:tint="@color/transparent_gray"-->
-    <ImageView android:contentDescription="@string/back"
+    <ImageView
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/a4_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/btn_back" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_Game_levelName"
+        style="@style/a4_title_style"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_back"
+        app:layout_constraintStart_toEndOf="@+id/button_back"
+        app:layout_constraintTop_toTopOf="@+id/button_back"
+        tools:text="C-1" />
+
+    <LinearLayout
+        android:id="@+id/counters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:src="@drawable/a4_icon_wrong" />
+
+        <TextView
+            android:id="@+id/wrong_counter"
+            style="@style/a4_counter_style"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="6dp"
+            tools:text="33" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/a4_icon_correct" />
+
+        <TextView
+            android:id="@+id/correct_counter"
+            style="@style/a4_counter_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            tools:text="99" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/task"
+        style="@style/a4_task_style"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="35dp"
+        android:background="@drawable/a4_bg_task"
+        android:gravity="center_vertical"
+        android:padding="32dp"
+        tools:text="3+5="
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counters" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:columnCount="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/task">
+
+        <TextView
+            android:id="@+id/button01"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_1" />
+
+        <TextView
+            android:id="@+id/button02"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_2" />
+
+        <TextView
+            android:id="@+id/button03"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_3" />
+
+        <TextView
+            android:id="@+id/button04"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_4" />
+
+        <TextView
+            android:id="@+id/button05"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_5" />
+
+        <TextView
+            android:id="@+id/button06"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_6" />
+
+        <TextView
+            android:id="@+id/button07"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_7" />
+
+        <TextView
+            android:id="@+id/button08"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_8" />
+
+        <TextView
+            android:id="@+id/button09"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_9" />
+
+        <TextView
+            android:id="@+id/button00"
+            style="@style/a4_number_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/a4_bg_number_button"
+            android:gravity="center"
+            android:text="@string/_0" />
+
+        <ImageView
+            android:layout_columnSpan="2"
+            android:layout_rowSpan="2"
+            android:id="@+id/button_enter"
+            android:layout_margin="8dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/a4_btn_enter_inactive"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/button_erase"
+            android:layout_margin="8dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/a4_btn_erase_inactive"
+            tools:ignore="ContentDescription" />
+
+    </GridLayout>
 
 
 

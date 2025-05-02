@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- choose level screen -->
     <style name="a4_level_text_style">
-        <item name="fontFamily">@font/noto_sans_medium</item>
-        <item name="android:textSize">22sp</item>
+        <item name="fontFamily">@font/noto_sans_bold</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -20,7 +21,7 @@
     </style>
 
     <style name="a4_level_title_style">
-        <item name="fontFamily">@font/noto_sans_medium</item>
+        <item name="fontFamily">@font/noto_sans_bold</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/a4_black</item>
     </style>
@@ -31,6 +32,36 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">true</item>
     </style>
+
+<!-- game screen-->
+
+    <style name="a4_title_style">
+        <item name="fontFamily">@font/noto_sans_semi_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/a4_grey</item>
+        <item name="lineHeight">2sp</item>
+    </style>
+
+    <style name="a4_counter_style">
+        <item name="fontFamily">@font/noto_sans_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/a4_grey</item>
+    </style>
+
+    <style name="a4_task_style">
+        <item name="fontFamily">@font/noto_sans_italic</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/a4_black</item>
+    </style>
+
+    <style name="a4_number_style">
+        <item name="fontFamily">@font/noto_sans_extra_bold_italic</item>
+        <item name="android:textSize">42sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:paddingTop">2dp</item>
+    </style>
+
 
 
     <style name="LevelTextStyle">

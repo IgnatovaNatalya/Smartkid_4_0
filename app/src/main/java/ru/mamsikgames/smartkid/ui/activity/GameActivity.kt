@@ -43,9 +43,9 @@ class GameActivity : AppCompatActivity() {
 
         viewModel.start(userId, levelId)
         viewModel.taskRenderParams.observe(this) { renderTask(it) }
-        viewModel.roundRenderParams.observe(this) {renderRound(it)}
+        viewModel.roundRenderParams.observe(this) { renderRound(it) }
 
-        viewModel.answerState.observe(this) {renderAnswer(it)}
+        viewModel.answerState.observe(this) { renderAnswer(it) }
     }
 
     private fun renderRound(r: Round) {
@@ -64,11 +64,11 @@ class GameActivity : AppCompatActivity() {
                 taskRenderParams.spanEnd,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            binding.textfieldTask.text = string
+            binding.task.text = string
         } else
-            binding.textfieldTask.text = str
+            binding.task.text = str
 
-        setOkButtonState(taskRenderParams.btnOkState)
+        setOkButtonState(taskRenderParams.btnEnterState)
         setEraseButtonState(taskRenderParams.btnEraseState)
     }
 
@@ -96,19 +96,19 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setOkButtonState(state: Boolean) {
-        with (binding.buttonOk) {
-            if (state) setImageResource(R.drawable.btn_ok)
-            else setImageResource(R.drawable.btn_ok_dis)
+        with (binding.buttonEnter) {
+            if (state) setImageResource(R.drawable.a4_btn_enter)
+            else setImageResource(R.drawable.a4_btn_enter_inactive)
         }
     }
 
     private fun setEraseButtonState(state: Boolean) {
-        if (state)  binding.buttonErase.setImageResource(R.drawable.btn_erase)
-        else binding.buttonErase.setImageResource(R.drawable.btn_erase)
+        if (state) binding.buttonErase.setImageResource(R.drawable.a4_btn_erase)
+        else binding.buttonErase.setImageResource(R.drawable.a4_btn_erase_inactive)
     }
 
     private fun setListeners() {
-        binding.buttonOk.setOnClickListener {
+        binding.buttonEnter.setOnClickListener {
             gameSounds.playSoundPlay()
             viewModel.pressOK()
         }

@@ -174,10 +174,10 @@ class TaskRepositoryImpl : TaskRepository {
             if ((op1Min == null) || (op1Max == null) || (op2Min == null) || (op2Max == null))
                 throw IllegalArgumentException("Wrong parameters")
 
-            val op1 = (op1Min..op1Max).random()
+            val res= (op1Min..op1Max).random()
             val op2 = (op2Min..op2Max).random()
 
-            val res = op1 * op2
+            val op1 = res * op2
 
             return Task(op1, op2, res, operation, equation)
         }
