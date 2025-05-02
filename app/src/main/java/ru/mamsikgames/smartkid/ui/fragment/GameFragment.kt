@@ -1,51 +1,51 @@
-package ru.mamsikgames.smartkid.ui.activity
+package ru.mamsikgames.smartkid.ui.fragment
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.UnderlineSpan
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.R
+import ru.mamsikgames.smartkid.core.BindingFragment
 import ru.mamsikgames.smartkid.core.GameSounds
-import ru.mamsikgames.smartkid.databinding.ActivityGameBinding
+import ru.mamsikgames.smartkid.databinding.FragmentGameBinding
 import ru.mamsikgames.smartkid.domain.model.Round
 import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
 import ru.mamsikgames.smartkid.ui.viewmodel.TaskRenderParams
+import kotlin.getValue
 
-
-class GameActivity : AppCompatActivity() {
+class GameFragment : BindingFragment<FragmentGameBinding>() {
 
     private val gameSounds: GameSounds by inject()
     private val viewModel: GameViewModel by viewModel()
 
-    private lateinit var binding: ActivityGameBinding
+    override fun createBinding(
+        inflater: LayoutInflater, container: ViewGroup?
+    ): FragmentGameBinding {
+        return FragmentGameBinding.inflate(inflater, container, false)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityGameBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
-        supportActionBar?.hide() ///
-
-        val userId = intent.getIntExtra(EXTRA_USER_ID, 0)
-        val levelId = intent.getIntExtra(EXTRA_LEVEL_ID, 0)
-        val levelCodeName = intent.getStringExtra(EXTRA_LEVEL_CODENAME)
+        val userId = requireArguments().getInt(EXTRA_USER_ID, 0)
+        val levelId = requireArguments().getInt(EXTRA_LEVEL_ID, 0)
+        val levelCodeName = requireArguments().getString(EXTRA_LEVEL_CODENAME)
 
         binding.textViewGameLevelName.text = levelCodeName
 
         setListeners()
 
         viewModel.start(userId, levelId)
-        viewModel.taskRenderParams.observe(this) { renderTask(it) }
-        viewModel.roundRenderParams.observe(this) { renderRound(it) }
+        viewModel.taskRenderParams.observe(viewLifecycleOwner) { renderTask(it) }
+        viewModel.roundRenderParams.observe(viewLifecycleOwner) { renderRound(it) }
 
-        viewModel.answerState.observe(this) { renderAnswer(it) }
+        viewModel.answerState.observe(viewLifecycleOwner) { renderAnswer(it) }
     }
 
     private fun renderRound(r: Round) {
@@ -72,12 +72,11 @@ class GameActivity : AppCompatActivity() {
         setEraseButtonState(taskRenderParams.btnEraseState)
     }
 
-    private fun renderAnswer(correct:Boolean) {
+    private fun renderAnswer(correct: Boolean) {
         if (correct) {
             gameSounds.playSoundCor()
             gameSounds.playSoundCorrect()
-        }
-        else {
+        } else {
             gameSounds.playSoundWrong()
         }
     }
@@ -96,7 +95,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setOkButtonState(state: Boolean) {
-        with (binding.buttonEnter) {
+        with(binding.buttonEnter) {
             if (state) setImageResource(R.drawable.a4_btn_enter)
             else setImageResource(R.drawable.a4_btn_enter_inactive)
         }
@@ -118,7 +117,7 @@ class GameActivity : AppCompatActivity() {
             viewModel.pressErase()
         }
 
-        binding.buttonBack.setOnClickListener { finish() }
+        //binding.buttonBack.setOnClickListener { finish() }
 
         binding.button01.setOnClickListener { pressNum(1) }
         binding.button02.setOnClickListener { pressNum(2) }
@@ -147,17 +146,11 @@ class GameActivity : AppCompatActivity() {
         const val EXTRA_LEVEL_CODENAME = "EXTRA_LEVEL_CODENAME"
         const val EXTRA_USER_ID = "EXTRA_USER_ID"
 
-        fun newInstance(
-            context: Context,
-            levelId: Int,
-            levelCodeName: String,
-            userId: Int
-        ): Intent {
-            return Intent(context, GameActivity::class.java).apply {
-                putExtra(EXTRA_LEVEL_ID, levelId)
-                putExtra(EXTRA_LEVEL_CODENAME, levelCodeName)
-                putExtra(EXTRA_USER_ID, userId)
-            }
-        }
+        fun createArgs(levelId: Int, codeName: String, userId: Int): Bundle =
+            bundleOf(
+                EXTRA_LEVEL_ID to levelId,
+                EXTRA_LEVEL_CODENAME to codeName,
+                EXTRA_USER_ID to userId
+            )
     }
 }

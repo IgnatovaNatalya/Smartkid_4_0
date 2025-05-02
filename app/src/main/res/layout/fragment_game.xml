@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/a4_game_background">
+    android:background="@drawable/a4_game_background"
+    tools:context=".ui.fragment.GameFragment">
 
     <ImageView
         android:id="@+id/button_back"

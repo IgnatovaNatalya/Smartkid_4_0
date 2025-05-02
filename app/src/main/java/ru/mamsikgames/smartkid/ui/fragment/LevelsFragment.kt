@@ -1,24 +1,28 @@
-package ru.mamsikgames.smartkid.ui.activity
+package ru.mamsikgames.smartkid.ui.fragment
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.mamsikgames.smartkid.ui.adapters.LevelsAdapter
+import ru.mamsikgames.smartkid.R
+import ru.mamsikgames.smartkid.core.BindingFragment
 import ru.mamsikgames.smartkid.core.GameSounds
-import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
+import ru.mamsikgames.smartkid.databinding.FragmentLevelsBinding
 import ru.mamsikgames.smartkid.domain.model.LevelModel
 import ru.mamsikgames.smartkid.ui.adapters.LevelGroupsAdapter
+import ru.mamsikgames.smartkid.ui.adapters.LevelsAdapter
 import ru.mamsikgames.smartkid.ui.util.CenterLayoutManager
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
 
-class MainActivity : AppCompatActivity() {
+class LevelsFragment : BindingFragment<FragmentLevelsBinding>() {
 
     private var gameSounds = GameSounds
     private val viewModel: ChooseLevelViewModel by viewModel()
-    private lateinit var binding: ActivityMainBinding
 
     private val adapterLevels = LevelsAdapter { openLevel(it) }
     private val adapterLevelGroups = LevelGroupsAdapter { clickGroup(it) }
@@ -27,20 +31,22 @@ class MainActivity : AppCompatActivity() {
 
     private var userId = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun createBinding(
+        inflater: LayoutInflater, container: ViewGroup?
+    ): FragmentLevelsBinding {
+        return FragmentLevelsBinding.inflate(inflater, container, false)
+    }
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        supportActionBar?.hide() ///
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        gameSounds.initSounds(this)
+        gameSounds.initSounds(requireContext())
 
-        viewModel.currentUserId.observe(this) { if (it != null) userId = it }
+        viewModel.currentUserId.observe(viewLifecycleOwner) { if (it != null) userId = it } ///
 
         //LEVELS
 
-        val levelLayoutManager = GridLayoutManager(this, 2)
+        val levelLayoutManager = GridLayoutManager(requireContext(), 2)
 
         levelLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -62,21 +68,23 @@ class MainActivity : AppCompatActivity() {
         //LEVEL GROUPS
 
         binding.recyclerLevelGroups.layoutManager =
-            CenterLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            CenterLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerLevelGroups.adapter = adapterLevelGroups
 
         //Observe
 
-        viewModel.listLevels.observe(this) { adapterLevels.setList(it) }
-        viewModel.listLevelGroups.observe(this) { adapterLevelGroups.setList(it) }
-        viewModel.mapGroupLevels.observe(this) { levelGroupsMap = it }
+        viewModel.listLevels.observe(viewLifecycleOwner) { adapterLevels.setList(it) }
+        viewModel.listLevelGroups.observe(viewLifecycleOwner) { adapterLevelGroups.setList(it) }
+        viewModel.mapGroupLevels.observe(viewLifecycleOwner) { levelGroupsMap = it }
     }
 
     private fun openLevel(level: LevelModel) {
         gameSounds.playSoundPlay()
-        val intent = GameActivity.newInstance(this, level.id, level.codeName, userId)
-        startActivity(intent)
+        findNavController().navigate(
+            R.id.action_levelsFragment_to_gameFragment,
+            GameFragment.createArgs(level.id, level.codeName, userId)
+        )
     }
 
     private fun clickGroup(groupPos: Int) {
@@ -95,9 +103,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getGroupPos(levelPos: Int): Int {
-        return levelGroupsMap[levelPos]?:0
+        return levelGroupsMap[levelPos] ?: 0
     }
-
 }
-
-
