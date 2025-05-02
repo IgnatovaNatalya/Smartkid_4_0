@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.mamsikgames.smartkid.LevelsAdapter
+import ru.mamsikgames.smartkid.ui.adapters.LevelsAdapter
 import ru.mamsikgames.smartkid.core.GameSounds
 import ru.mamsikgames.smartkid.databinding.ActivityMainBinding
 import ru.mamsikgames.smartkid.domain.model.LevelModel

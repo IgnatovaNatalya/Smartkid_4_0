@@ -1,4 +1,4 @@
-package ru.mamsikgames.smartkid
+package ru.mamsikgames.smartkid.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.mamsikgames.smartkid.databinding.A4ItemLevelBinding
 import ru.mamsikgames.smartkid.domain.model.LevelModel
-import ru.mamsikgames.smartkid.ui.adapters.LevelViewHolder
 
 class LevelsAdapter(private val clickListener: AdapterClickListener) :
     RecyclerView.Adapter<LevelViewHolder>() {
@@ -23,7 +22,7 @@ class LevelsAdapter(private val clickListener: AdapterClickListener) :
             levelsList[position - 1].groupName != levelsList[position].groupName
         else true
 
-        holder.bind(levelsList.get(position) , sectionHeader)
+        holder.bind(levelsList[position], sectionHeader)
 
         holder.itemView.setOnClickListener { clickListener.onLevelClick(levelsList[position]) }
     }

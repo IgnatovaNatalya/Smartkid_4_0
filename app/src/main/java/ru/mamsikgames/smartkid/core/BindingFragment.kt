@@ -1,4 +1,4 @@
-package com.example.playlistmaker.core
+package ru.mamsikgames.smartkid.core
 
 import android.os.Bundle
 import android.view.LayoutInflater
