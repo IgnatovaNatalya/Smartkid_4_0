@@ -34,7 +34,6 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-rxJava3 = { group = "androidx.room", name = "room-rxjava3", version.ref = "room" }
-room-rxJava2 = { group = "androidx.room", name = "room-rxjava2", version.ref = "room" }
 rxjava3-rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
 rxjava3-rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }

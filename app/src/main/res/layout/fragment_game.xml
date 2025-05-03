@@ -7,32 +7,34 @@
     android:background="@drawable/a4_game_background"
     tools:context=".ui.fragment.GameFragment">
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/a4_arrow_back"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent" >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:src="@drawable/a4_arrow_back" />
     <TextView
         android:id="@+id/textView_Game_levelName"
         style="@style/a4_title_style"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button_back"
-        app:layout_constraintStart_toEndOf="@+id/button_back"
-        app:layout_constraintTop_toTopOf="@+id/button_back"
+        android:layout_marginStart="6dp"
         tools:text="C-1" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/counters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -73,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="190dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="35dp"
+        android:layout_marginTop="18dp"
         android:background="@drawable/a4_bg_task"
         android:gravity="center_vertical"
         android:padding="32dp"
@@ -85,7 +87,7 @@
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="12dp"
         android:columnCount="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

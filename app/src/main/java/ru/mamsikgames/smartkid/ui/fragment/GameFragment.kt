@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.mamsikgames.smartkid.R
@@ -117,7 +119,7 @@ class GameFragment : BindingFragment<FragmentGameBinding>() {
             viewModel.pressErase()
         }
 
-        //binding.buttonBack.setOnClickListener { finish() }
+        binding.buttonBack.setOnClickListener { findNavController().popBackStack()}
 
         binding.button01.setOnClickListener { pressNum(1) }
         binding.button02.setOnClickListener { pressNum(2) }

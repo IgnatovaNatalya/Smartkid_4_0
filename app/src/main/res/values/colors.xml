@@ -39,6 +39,8 @@
     <color name="a4_salad_green">#B2EB31</color>
     <color name="a4_grass_green">#7EA623</color>
 
+    <color name="a4_dusty_blue">#57ACC8</color>
     <color name="a4_grey">#4E4E4E</color>
+    <color name="a4_dusty_grey">#A6BAC1</color>
 
 </resources>

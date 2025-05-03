@@ -33,6 +33,11 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="a4_bottom_navigation">
+        <item name="android:fontFamily">@font/noto_sans_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 <!-- game screen-->
 
     <style name="a4_title_style">
