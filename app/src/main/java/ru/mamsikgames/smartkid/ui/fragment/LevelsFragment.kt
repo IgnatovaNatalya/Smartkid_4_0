@@ -17,6 +17,7 @@ import ru.mamsikgames.smartkid.domain.model.LevelModel
 import ru.mamsikgames.smartkid.ui.adapters.LevelGroupsAdapter
 import ru.mamsikgames.smartkid.ui.adapters.LevelsAdapter
 import ru.mamsikgames.smartkid.ui.util.CenterLayoutManager
+import ru.mamsikgames.smartkid.ui.util.TopSnappingSmoothScroller
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
 
 class LevelsFragment : BindingFragment<FragmentLevelsBinding>() {
@@ -88,8 +89,14 @@ class LevelsFragment : BindingFragment<FragmentLevelsBinding>() {
     }
 
     private fun clickGroup(groupPos: Int) {
+//        binding.recyclerLevelGroups.smoothScrollToPosition(groupPos)
+//        binding.recyclerLevels.smoothScrollToPosition(getLevelPos(groupPos))
         binding.recyclerLevelGroups.smoothScrollToPosition(groupPos)
-        binding.recyclerLevels.smoothScrollToPosition(getLevelPos(groupPos))
+        val targetPos = getLevelPos(groupPos)
+        val layoutManager = binding.recyclerLevels.layoutManager as GridLayoutManager
+        val scroller = TopSnappingSmoothScroller(requireContext())
+        scroller.targetPosition = targetPos
+        layoutManager.startSmoothScroll(scroller)
     }
 
     private fun switchGroup(levelPos: Int) {

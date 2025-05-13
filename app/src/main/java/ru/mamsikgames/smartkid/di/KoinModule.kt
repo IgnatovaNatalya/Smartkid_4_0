@@ -16,7 +16,7 @@ import ru.mamsikgames.smartkid.domain.interactor.GameInteractor
 import ru.mamsikgames.smartkid.ui.viewmodel.ChooseLevelViewModel
 import ru.mamsikgames.smartkid.ui.viewmodel.GameViewModel
 
-val DatabaseModule = module {
+val databaseModule = module {
     single {
         Room.databaseBuilder(get(), SmartDb::class.java, "smart_db")
             .createFromAsset("smart_db.db")

@@ -4,7 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.context.stopKoin
-import ru.mamsikgames.smartkid.di.DatabaseModule
+import ru.mamsikgames.smartkid.di.databaseModule
 import ru.mamsikgames.smartkid.di.interactorModule
 import ru.mamsikgames.smartkid.di.repositoryModule
 import ru.mamsikgames.smartkid.di.viewModelModule
@@ -16,7 +16,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(DatabaseModule, repositoryModule, interactorModule, viewModelModule)
+            modules(databaseModule, repositoryModule, interactorModule, viewModelModule)
         }
     }
 
