@@ -26,7 +26,28 @@
         android:layout_width="wrap_content"
         android:layout_height="28dp"
         android:layout_marginStart="6dp"
+        android:layout_marginEnd="8dp"
         tools:text="C-1" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:background="@drawable/a4_rect_stroke"
+            android:padding="0dp"
+            />
+        <ru.mamsikgames.smartkid.ui.util.CustomProgressBar
+            android:layout_width="100dp"
+            android:layout_height="24dp"
+            android:layout_marginHorizontal="6dp"
+            android:layout_gravity="center"
+            app:bgColor="@color/a4_transparent_white_65"
+            app:progressColor="@color/a4_cian"
+            app:borderColor="@color/a4_grey"
+            app:borderWidth="2dp"
+            app:bgCornerRadius="8dp"
+            app:progressCornerRadius="6dp"
+            app:progressPadding="4dp"/>
     </LinearLayout>
 
     <LinearLayout

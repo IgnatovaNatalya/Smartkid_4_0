@@ -13,7 +13,21 @@
         <attr name="shadow2Dx" format="float" />
         <attr name="shadow2Dy" format="float" />
         <attr name="shadow2Color" format="color"/>
-        <attr name="shaderBackground"  format="float"/>
+        <attr name="shaderBackground" format="float" />
+
+    </declare-styleable>
+
+    <declare-styleable name="CustomProgressBar">
+        <!-- Цвета -->
+        <attr name="bgColor" format="color"/>
+        <attr name="progressColor" format="color"/>
+        <attr name="borderColor" format="color"/>
+
+        <!-- Размеры -->
+        <attr name="borderWidth" format="dimension"/>
+        <attr name="bgCornerRadius" format="dimension"/>
+        <attr name="progressCornerRadius" format="dimension"/>
+        <attr name="progressPadding" format="dimension"/>
     </declare-styleable>
 
 </resources>
