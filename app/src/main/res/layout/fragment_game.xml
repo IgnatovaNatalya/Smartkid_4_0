@@ -8,74 +8,80 @@
     tools:context=".ui.fragment.GameFragment">
 
     <LinearLayout
-        android:id="@+id/button_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/buttons"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
+        android:padding="0dp"
+        android:gravity="center_vertical|start"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:importantForAccessibility="no"
-        android:src="@drawable/a4_arrow_back" />
-    <TextView
-        android:id="@+id/textView_Game_levelName"
-        style="@style/a4_title_style"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="8dp"
-        tools:text="C-1" />
+        app:layout_constraintEnd_toStartOf="@+id/counters"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:importantForAccessibility="no"
+            android:src="@drawable/a4_arrow_back" />
 
         <TextView
-            android:layout_gravity="center"
-            android:layout_width="40dp"
-            android:layout_height="24dp"
-            android:background="@drawable/a4_rect_stroke"
-            android:padding="0dp"
-            />
+            android:id="@+id/textView_Game_levelName"
+            style="@style/a4_title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            tools:text="C-1" />
+
         <ru.mamsikgames.smartkid.ui.util.CustomProgressBar
-            android:layout_width="100dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="24dp"
-            android:layout_marginHorizontal="6dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical|start"
             app:bgColor="@color/a4_transparent_white_65"
-            app:progressColor="@color/a4_cian"
-            app:borderColor="@color/a4_grey"
-            app:borderWidth="2dp"
+            android:layout_marginHorizontal="18dp"
             app:bgCornerRadius="8dp"
-            app:progressCornerRadius="6dp"
-            app:progressPadding="4dp"/>
+            app:borderColor="@color/a4_cian"
+            app:borderWidth="2dp"
+            app:progressColor="@color/a4_cian"
+            app:progressCornerRadius="4dp"
+            app:progressPadding="4dp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/counters"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="40dp"
-        android:orientation="horizontal"
+        android:padding="0dp"
+        android:gravity="center_vertical|end"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
             android:importantForAccessibility="no"
             android:src="@drawable/a4_icon_wrong" />
 
         <TextView
             android:id="@+id/wrong_counter"
             style="@style/a4_counter_style"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
             android:layout_marginStart="6dp"
             tools:text="33" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
             android:layout_marginStart="12dp"
             android:importantForAccessibility="no"
             android:src="@drawable/a4_icon_correct" />
@@ -85,6 +91,7 @@
             style="@style/a4_counter_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
             android:layout_marginStart="6dp"
             tools:text="99" />
     </LinearLayout>
@@ -100,10 +107,10 @@
         android:background="@drawable/a4_bg_task"
         android:gravity="center_vertical"
         android:padding="32dp"
-        tools:text="3+5="
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/counters" />
+        app:layout_constraintTop_toBottomOf="@+id/buttons"
+        tools:text="3+5=" />
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -215,25 +222,24 @@
             android:text="@string/_0" />
 
         <ImageView
-            android:layout_columnSpan="2"
-            android:layout_rowSpan="2"
             android:id="@+id/button_enter"
-            android:layout_margin="8dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowSpan="2"
+            android:layout_columnSpan="2"
+            android:layout_margin="8dp"
             android:src="@drawable/a4_btn_enter_inactive"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/button_erase"
-            android:layout_margin="8dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:src="@drawable/a4_btn_erase_inactive"
             tools:ignore="ContentDescription" />
 
     </GridLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

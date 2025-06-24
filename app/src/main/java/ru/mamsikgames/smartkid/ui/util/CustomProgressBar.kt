@@ -21,7 +21,7 @@ class CustomProgressBar @JvmOverloads constructor(
     private var borderWidth = 2f.dpToPx()                  // Толщина границы
     private var bgCornerRadius = 8f.dpToPx()               // Закругление фона
     private var progressCornerRadius = 6f.dpToPx()         // Закругление прогресса
-    private var progressPadding = 4f.dpToPx()              // Отступ прогресса от границ
+    private var progressPadding = 6f.dpToPx()              // Отступ прогресса от границ
 
     private val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -39,7 +39,7 @@ class CustomProgressBar @JvmOverloads constructor(
         color = progressColor
     }
 
-    private var progress = 0.5f // 0..1
+    private var progress = 1f // 0..1
 
     private val bgRect = RectF()
     private val progressRect = RectF()
@@ -51,6 +51,7 @@ class CustomProgressBar @JvmOverloads constructor(
                 bgColor = getColor(R.styleable.CustomProgressBar_bgColor, bgColor)
                 progressColor = getColor(R.styleable.CustomProgressBar_progressColor, progressColor)
                 borderColor = getColor(R.styleable.CustomProgressBar_borderColor, borderColor)
+
                 borderWidth = getDimension(R.styleable.CustomProgressBar_borderWidth, borderWidth)
                 bgCornerRadius = getDimension(R.styleable.CustomProgressBar_bgCornerRadius, bgCornerRadius)
                 progressCornerRadius = getDimension(R.styleable.CustomProgressBar_progressCornerRadius, progressCornerRadius)
@@ -73,7 +74,7 @@ class CustomProgressBar @JvmOverloads constructor(
 
     private fun updateRects() {
         // Фон (включая границу)
-        bgRect.set(0f, 0f, width.toFloat(), height.toFloat())
+        bgRect.set(1f.dpToPx(), 1f.dpToPx(), width.toFloat() - 1f.dpToPx(), height.toFloat() - 1f.dpToPx())
 
         // Прогресс (с отступами)
         progressRect.set(
